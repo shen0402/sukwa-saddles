@@ -1,0 +1,40 @@
+{% if blog.next_article or blog.previous_article %}
+  
+  {% assign current_found = false %}
+  {% assign done = false %}
+  {% for a in blog.articles %}
+    {% if current_found and done == false %}
+      {% assign next_article = a %}
+      {% assign done = true %}
+    {% endif %}
+    {% unless done %}
+      {% if a.id == article.id %}
+        {% assign current_found = true %}
+      {% else %}
+        {% assign prev_article = a %}
+      {% endif %}
+    {% endunless %}
+  {% endfor %}
+
+  <nav class="article-pagination">
+      {% if prev_article %}
+        <a class="previous-post" href="{{ prev_article.url }}">
+          {{ prev_article.title | escape }}
+        </a>
+      {% else %}
+        <a class="previous-post" href="{{ blog.url }}">
+          {{ 'blogs.article_item.back_to' | t }}
+        </a>
+      {% endif %}
+
+      {% if next_article %}
+        <a class="next-post" href="{{ next_article.url }}">
+          {{ next_article.title | escape }}
+        </a>
+      {% else %}
+        <a class="next-post" href="{{ blog.url }}">
+          {{ 'blogs.article_item.back_to' | t }}
+        </a>
+      {% endif %}
+  </nav>
+{% endif %}

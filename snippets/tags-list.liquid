@@ -1,0 +1,12 @@
+
+<div class="section-tags section-tags-overflow-right">
+  <ul class="section-tag-list">
+    {% for tag in tags-list.all_tags %}
+      {% if current_tags contains tag %}
+        <li class="section-tag section-tag-active">{{ tag | link_to_remove_tag: tag }}</li>
+      {% else %}
+        <li class="section-tag">{{ tag | link_to_tag: tag }}</li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>

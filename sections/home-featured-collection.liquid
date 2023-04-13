@@ -1,0 +1,160 @@
+{% assign collection = collections[section.settings.collection] %}
+
+{% if collection.empty? %}
+  {%- assign section_onboarding = true -%}
+{% endif %}
+
+{%- capture section_classes -%}
+  home-featured-collection
+  home-section
+{%- endcapture -%}
+
+{%- capture color_class -%}
+  {%- include 'collection-color' -%}
+{%- endcapture -%}
+
+{% assign section_classes = section_classes | append: ' ' | append: color_class %}
+
+<section class="{{ section_classes | strip_newlines | strip }}" data-home-section>
+  <article
+    class="
+      home-section-content
+      home-featured-collection-content
+    "
+  >
+    <h1 class="home-section-title jc-home-section-title">
+      {% if section_onboarding %}
+        {{ 'onboarding.title' | t }}
+      {% else %}
+        <a href="{{ collection.url }}">{{ collection.title }}</a>
+      {% endif %}
+    </h1>
+
+    {% if collection.description != blank and section.settings.show_description %}
+      <div class="home-section-text home-featured-collection-text rte">
+        {{ collection.description }}
+      </div>
+    {% endif %}
+
+    <a class="home-section-link jc-home-section-link" href="{{ collection.url }}">
+      {{ 'shop_collection' | t }}
+      {%- include 'icon-arrow-right' -%}
+    </a>
+  </article>
+</section>
+
+{% if section_onboarding or collection.products %}
+  {% capture product_crop %}product-crop-{{ section.settings.product_aspect_ratio }}{% endcapture %}
+
+  <section class="
+    home-section-collection-products
+    {{ product_crop }}
+    rows-of-2
+    {% if section_onboarding %}home-section-onboarding{% endif %}
+  ">
+    {% if section.settings.manual_products and section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+        {% assign product = all_products[block.settings.product] %}
+        {% include 'product-list-item', item: product %}
+      {% endfor %}
+    {% elsif section_onboarding %}
+      {% assign title = 'onboarding.product_title' | t %}
+      {% include 'product-list-item', placeholder: 'product-2', title: title %}
+      {% include 'product-list-item', placeholder: 'product-3', title: title %}
+      {% include 'product-list-item', placeholder: 'product-4', title: title %}
+      {% include 'product-list-item', placeholder: 'product-5', title: title %}
+    {% else %}
+      {% for product in collection.products limit: 4 %}
+        {% include 'product-list-item', item: product %}
+      {% endfor %}
+    {% endif %}
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "class": "home-featured-collection",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "product_aspect_ratio",
+      "label": "Product aspect ratio",
+      "options": [
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "short",
+          "label": "Short"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "tall",
+          "label": "Tall"
+        }
+      ],
+      "default": "original"
+    },
+    {
+      "type": "header",
+      "content": "Manually set products"
+    },
+    {
+      "type": "paragraph",
+      "content": "Enable this section and set up to 4 products to show. For consistency you should choose products only from the collection chosen above."
+    },
+    {
+      "type": "checkbox",
+      "id": "manual_products",
+      "label": "Enable"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "locales": {
+    "en": {
+      "shop_collection": "Shop collection",
+      "onboarding": {
+        "title": "Your collection's name",
+        "product_title": "Your product's name"
+      }
+    }
+  },
+  "presets": [
+    {
+      "category": "Collection",
+      "name": "Featured collection",
+      "blocks": []
+    }
+  ]
+}
+
+{% endschema %}

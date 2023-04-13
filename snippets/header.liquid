@@ -1,0 +1,46 @@
+{% comment %}
+  @param logo {Image}
+         Image object to use as logo
+
+  @param show_announcement {Boolean}
+         Include announcement bar
+
+  @param hide_nav {Boolean}
+         If true, hide the `Menu` and `Cart` links
+{% endcomment %}
+
+<div class="main-header" data-main-header>
+  {% unless hide_nav %}
+    <div class="main-header-item main-header-menu-item">
+      <a
+        class="main-header-link"
+        href="#"
+        title="{{ 'layout.navigation.menu' | t }}"
+        data-overnav-open
+        aria-controls="overnav"
+        aria-expanded="false"
+      >
+        {%- include 'icon-menu' -%}
+      </a>
+    </div>
+  {% endunless %}
+
+  <div class="main-header-logo">
+    {% include 'header-logo', logo: logo %}
+  </div>
+
+  {% unless hide_nav %}
+    <div class="main-header-item main-header-cart-item">
+      <a
+        class="main-header-link {% if cart.item_count > 0 %}cart-has-contents{% endif %}"
+        href="/cart"
+        title="{{ 'layout.navigation.cart' | t }}">
+        {%- include 'icon-cart' -%}
+      </a>
+    </div>
+  {% endunless %}
+</div>
+
+{% if show_announcement %}
+  {% include 'announcement-bar' %}
+{% endif %}

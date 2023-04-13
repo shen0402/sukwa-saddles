@@ -1,0 +1,9 @@
+{% comment %}
+  @param truncate_text
+         Text to truncate
+
+  @param truncate_length
+         Word length to truncate text
+{% endcomment %}
+
+{{ truncate_text | replace: '<br/>', ' ' | replace: '<br>', ' ' | replace: '<br />', ' ' | strip_html | truncatewords: truncate_length }}

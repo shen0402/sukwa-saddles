@@ -1,0 +1,217 @@
+<script
+  type="application/json"
+  data-section-type="home-slideshow"
+  data-section-id="{{ section.id }}"
+  data-section-data
+>
+  {
+    "should_autoplay": {{ section.settings.should_autoplay | json }},
+    "autoplay": {{ section.settings.slide_autoplay | json }},
+    "slide_count": {{ section.blocks.size | json }}
+  }
+</script>
+
+<section
+  class="home-section-height-fullscreen"
+  data-home-section
+>
+  <div
+    class="
+      slideshow-slide-{{ section.id }}
+      {% if section.settings.overlay_style == 'dark' and section.settings.overlay_show %} overlay-light-dots{% endif %}
+    "
+    data-slideshow
+  >
+    {% for block in section.blocks %}
+      {% if block.settings.video_url != blank %}
+        {% assign has_video_modal = true %}
+      {% endif %}
+      {% include 'slideshow-slide', video_id: forloop.index %}
+    {% endfor %}
+  </div>
+</section>
+
+{% if has_video_modal %}
+  {% assign video_modal = 'slideshow-video' | append: '-' | append: section.id %}
+  {% include 'modal', modal_instance: video_modal %}
+{% endif %}
+
+<style>
+  .slideshow-slide-{{ section.id }} .flickity-page-dots .dot.is-paused:before {
+    animation: flickity-progress {{ section.settings.slide_autoplay }}s linear;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Slideshow",
+  "class": "home-slideshow",
+  "settings": [
+    {
+      "id": "should_autoplay",
+      "type": "checkbox",
+      "label": "Autoplay slideshow",
+      "default": true
+    },
+    {
+      "id": "slide_autoplay",
+      "type": "range",
+      "label": "Autoplay slide duration",
+      "min": 5,
+      "max": 12,
+      "step": 1,
+      "unit": "sec",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "id": "overlay_show",
+      "type": "checkbox",
+      "label": "Show overlay",
+      "default": true
+    },
+    {
+      "id": "overlay_style",
+      "type": "select",
+      "label": "Style",
+      "options": [
+        {
+          "value": "light",
+          "label": "Light text on dark overlay"
+        },
+        {
+          "value": "dark",
+          "label": "Dark text on light overlay"
+        },
+        {
+          "value": "accent",
+          "label": "Accent"
+        }
+      ],
+      "default": "accent"
+    },
+    {
+      "id": "overlay_opacity",
+      "type": "range",
+      "label": "Opacity",
+      "min": 10,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "Video background URL",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Cover image",
+          "info": "On mobile, image will be displayed instead of the autoplaying video background"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image position",
+          "default": "center-center",
+          "options": [
+            {
+              "label": "Top left",
+              "value": "top-left"
+            },
+            {
+              "label": "Top center",
+              "value": "top-center"
+            },
+            {
+              "label": "Top right",
+              "value": "top-right"
+            },
+            {
+              "label": "Center left",
+              "value": "center-left"
+            },
+            {
+              "label": "Center",
+              "value": "center-center"
+            },
+            {
+              "label": "Center right",
+              "value": "center-right"
+            },
+            {
+              "label": "Bottom left",
+              "value": "bottom-left"
+            },
+            {
+              "label": "Bottom center",
+              "value": "bottom-center"
+            },
+            {
+              "label": "Bottom right",
+              "value": "bottom-right"
+            }
+          ]
+        },
+        {
+          "id": "heading",
+          "type": "text",
+          "label": "Heading",
+          "default": "Slide heading"
+        },
+        {
+          "id": "subheading",
+          "type": "text",
+          "label": "Subheading"
+        },
+        {
+          "id": "button_link",
+          "type": "url",
+          "label": "Button link",
+          "info": "YouTube and Vimeo links will open a modal for video play"
+        },
+        {
+          "id": "button_label",
+          "type": "text",
+          "label": "Button label",
+          "default": "Slide link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "category": "Image",
+      "name": "Slideshow",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "image_position": "center-center"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}

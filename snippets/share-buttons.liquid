@@ -1,0 +1,94 @@
+{% assign social_image = false %}
+{% assign social_title = false %}
+
+{% if template contains 'article' or template contains 'blog' %}
+  {% capture social_url %}{{ shop.url }}{{ article.url }}{% endcapture %}
+  {% assign social_title = article.title | url_param_escape %}
+  {% assign social_image = article | img_url: '1024x1024' %}
+{% elsif template contains 'product' %}
+  {% capture social_url %}{{ shop.url }}{{ product.url }}{% endcapture %}
+  {% assign social_title = product.title | url_param_escape %}
+  {% assign social_image = product | img_url: '1024x1024' %}
+{% elsif template == 'password' %}
+  {% assign social_url = shop.url %}
+  {%- capture social_title -%}
+    {%- unless shop.description == blank -%}
+      {{ shop.description | url_param_escape }}
+    {%- else -%}
+      {{ shop.name | url_param_escape }}
+    {%- endunless -%}
+  {%- endcapture -%}
+{% endif %}
+
+{% assign platforms = 0 %}
+{% assign social_platforms = 'facebook|twitter|pinterest|fancy|google_plus|email' | split: '|' %}
+
+{% for platform in social_platforms %}
+  {% capture setting %}share_widget_{{ platform }}{% endcapture %}
+  {% assign platform_enabled = settings[setting] %}
+  {% if platform_enabled %}{% assign platforms = platforms | plus: 1 %}{% endif %}
+{% endfor %}
+
+{% if platforms > 0 %}
+  <div class="share-buttons-wrapper">
+    <a class="share-buttons-label" href="#" data-share-widget-toggle>
+      {% if template == 'password' %}
+        {{ 'general.password_page.share_label' | t }}
+      {% else %}
+        {{ 'general.social.share' | t }}
+      {% endif %}
+    </a>
+
+    <div class="share-buttons" data-share-widget>
+
+      {% if settings.share_widget_facebook %}
+        <a target="_blank" href="//www.facebook.com/sharer.php?u={{ social_url }}">
+          <svg role="img" class="social-link-icon" aria-label="{{ 'general.social.like' | t }}">
+            <use xlink:href="#icon-social-facebook"></use>
+          </svg>
+        </a>
+      {% endif %}
+
+      {% if settings.share_widget_twitter %}
+        <a target="_blank" href="//twitter.com/share?url={{ social_url }}">
+          <svg role="img" class="social-link-icon" aria-label="{{ 'general.social.tweet' | t }}">
+            <use xlink:href="#icon-social-twitter"></use>
+          </svg>
+        </a>
+      {% endif %}
+
+      {% if settings.share_widget_pinterest and social_image%}
+        <a target="_blank" href="//pinterest.com/pin/create/button/?url={{ social_url }}&amp;media={{ social_image }}&amp;description={{ social_title }}">
+          <svg role="img" class="social-link-icon" aria-label="{{ 'general.social.pin_it' | t }}">
+            <use xlink:href="#icon-social-pinterest"></use>
+          </svg>
+        </a>
+      {% endif %}
+
+      {% if settings.share_widget_fancy and social_image%}
+        <a target="_blank" href="http://www.thefancy.com/fancyit?ItemURL={{ social_url }}&amp;Title={{ social_title }}&amp;Category=Other&amp;ImageURL={{ social_image }}">
+          <svg role="img" class="social-link-icon" aria-label="{{ 'general.social.fancy' | t }}">
+            <use xlink:href="#icon-social-fancy"></use>
+          </svg>
+        </a>
+      {% endif %}
+
+      {% if settings.share_widget_google_plus %}
+        <a target="_blank" href="//plus.google.com/share?url={{ social_url }}">
+          <svg role="img" class="social-link-icon" aria-label="{{ 'general.social.plus_one' | t }}">
+            <use xlink:href="#icon-social-google"></use>
+          </svg>
+        </a>
+      {% endif %}
+
+      {% if settings.share_widget_email %}
+        <a target="_blank" href="mailto:?subject={{ social_title }}&amp;body={{ 'general.social.email_body' | t: link: social_url }}">
+          <svg role="img" class="social-link-icon" aria-label="{{ 'general.social.email' | t }}">
+            <use xlink:href="#icon-social-email"></use>
+          </svg>
+        </a>
+      {% endif %}
+
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,129 @@
+{% assign variant = product.selected_or_first_available_variant %}
+
+{% if variant.compare_at_price > variant.price %}
+  {% assign has_compare_price = true %}
+{% else %}
+  {% assign has_compare_price = false %}
+{% endif %}
+
+{% comment %}
+  Since the height of the header can change depending on the title length, we
+  want to limit this to be the approx height of 1 line of text.
+{% endcomment %}
+
+<header
+  class="product-details-header-mobile"
+  data-height="{% if collection %}86{% else %}64{% endif %}">
+
+  <div class="product-details-header-mobile-content">
+    {% if section.settings.show_product_vendor and product.vendor %}
+      <span class="product-vendor-title">
+        {{ product.vendor }}
+      </span>
+    {% endif %}
+
+    {% if collection %}
+      <a class="product-collection-link jc-product-collection-link" href="{{ collection.url }}">{{ collection.title }}</a>
+    {% endif %}
+
+    <h1 class="product-title jc-product-title" itemprop="name">{{ product.title }}</h1>
+  </div>
+
+  <a
+    class="product-mobile-toggle"
+    href="#"
+    data-product-extended-mobile>
+    {{ 'layout.navigation.product_details_open' | t }}
+  </a>
+</header>
+
+<div
+  class="product-details {% if product.available == false %}product-variant-soldout{% endif %}"
+  itemscope
+  itemtype="http://schema.org/Product">
+
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url | within: collection }}">
+  <meta itemprop="image" content="{{ product | img_url: '600x600' }}">
+
+  {% if product.available %}
+    <link itemprop="availability" href="http://schema.org/InStock">
+  {% else %}
+    <link itemprop="availability" href="http://schema.org/OutOfStock">
+  {% endif %}
+
+  <div class="product-details-panel">
+    <header class="product-details-header">
+      <div class="product-details-header-content">
+
+        {% if section.settings.show_product_vendor and product.vendor %}
+          <span class="product-vendor-title">
+            {{ product.vendor }}
+          </span>
+        {% endif %}
+
+        {% if collection %}
+          <a
+            class="product-collection-link jc-product-collection-link"
+            href="{{ collection.url }}">
+            {{ collection.title }}
+          </a>
+        {% endif %}
+
+        <h1 class="product-title jc-product-title" itemprop="name">
+          {{ product.title }}
+          <a href="#" class="product-details-close" data-product-extended-close>{% include 'icon-close' %}</a>
+        </h1>
+      </div>
+
+      <p
+        class="product-price"
+        data-price-area
+        itemscope
+        itemprop="offers"
+        itemtype="http://schema.org/Offer">
+
+        <span class="product-price-unavailable">{{ 'products.product.unavailable' | t }}</span>
+
+        <span class="product-price-minimum product-price-money" data-price-original data-money>
+          {{ variant.price | money }}
+        </span>
+
+        <span
+          class="
+            product-price-compare
+            product-price-money
+            {% if has_compare_price %}product-price-has-compare{% endif %}
+          "
+          data-price-compare
+          data-money>
+          {% if has_compare_price %}
+            {{ variant.compare_at_price | money }}
+          {% endif %}
+        </span>
+      </p>
+    </header>
+
+    {% include 'product-options', variant: variant %}
+
+    {% if product.description != blank %}
+      <div class="product-description product-description-excerpt">
+        {%- include 'truncate-words', truncate_text: product.description, truncate_length: 38 -%}
+        <a
+          href="#"
+          class="product-description-readmore"
+          data-product-extended-open>{{ 'products.product.read_more' | t }}</a>
+      </div>
+    {% endif %}
+
+    <div class="product-description product-description-full rte" itemprop="description">
+      {{ product.description }}
+    </div>
+
+    {% include 'share-buttons', settings: section.settings %}
+
+    {% if section.settings.enable_single == false %}
+      {% include 'product-related' %}
+    {% endif %}
+  </div>
+
+</div>

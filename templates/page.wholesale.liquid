@@ -1,0 +1,127 @@
+<div class="contained">
+  <div class="page-content contact-page">
+    <h1 class="jc-page-title page-title">FILL OUT THE FORM TO BECOME A SUKWA WHOLESALER
+</h1>
+    <p class="jc-top-text-wholesale">Thank you for your interest in becoming a Sukwa wholesaler! Let us know a little bit more about you and our team will assist you in 1-3 business days.</p>
+	
+    {% unless page.content == blank %}
+      <div class="rte page-body jc-contact-page-body">
+        {{ page.content }}
+      </div>
+    {% endunless %}
+
+    <div class="contact-form jc-contact-form">
+      {% form 'contact' %}
+
+        {% if form.posted_successfully? %}
+          <p class="success-message">
+            {{ 'general.contact.success' | t  }}
+          </p>
+        {% else %}
+
+          {% if form.errors %}
+            {{ form.errors | default_errors }}
+          {% endif %}
+
+          <div class="input-wrapper">
+            <label for="contact-name" class="visually-hidden">{{ 'general.general.name' | t }}</label>
+            <input
+              id="contact-name"
+              type="text"
+              placeholder="{{ 'general.general.name_placeholder' | t }}*"
+              value="{{ form.name }}"
+              name="contact[name]"
+              class="jc-input-field input-field {% if form.errors contains "name" %}error{% endif %}">
+          </div>
+      
+      <div class="input-wrapper">
+            <label for="contact-business-name" class="visually-hidden">Business Name</label>
+            <input
+              id="contact-business-name"
+              type="text"
+              placeholder="Business Name*"
+              value=""
+              name="contact[business-name]"
+              class="jc-input-field input-field {% if form.errors contains "name" %}error{% endif %}">
+          </div>
+
+          <div class="input-wrapper">
+            <label for="contact-email" class="visually-hidden">{{ 'general.general.email' | t }}</label>
+            <input
+              id="contact-email"
+              type="text"
+              placeholder="{{ 'general.general.email_placeholder' | t }}*"
+              value="{{ form.email }}"
+              name="contact[email]"
+              class="jc-input-field input-field {% if form.errors contains "email" %}error{% endif %}">
+          </div>
+
+          <div class="input-wrapper">
+            <label for="contact-phone" class="visually-hidden">{{ 'general.general.phone' | t }}</label>
+            <input
+              id="contact-phone"
+              type="tel"
+              placeholder="{{ 'general.general.phone_placeholder' | t }}*"
+              value="{{ form.phone }}"
+              name="contact[phone]"
+              class="jc-input-field input-field {% if form.errors contains "phone" %}error{% endif %}">
+          </div>
+      
+      <div class="input-wrapper">
+            <label for="contact-website" class="visually-hidden">{{ 'general.general.phone' | t }}</label>
+            <input
+              id="contact-website"
+              type="text"
+              placeholder="Website*"
+              value=""
+              name="contact[website]"
+              class="jc-input-field input-field {% if form.errors contains "phone" %}error{% endif %}">
+          </div>
+      
+      <div class="input-wrapper">
+            <label for="contact-ein" class="visually-hidden">{{ 'general.general.phone' | t }}</label>
+            <input
+              id="contact-ein"
+              type="text"
+              placeholder="EIN Number"
+              value=""
+              name="contact[EIN-number]"
+              class="jc-input-field input-field {% if form.errors contains "phone" %}error{% endif %}">
+          </div>
+      
+      <div class="input-wrapper">
+            <label for="contact-how-did-you-hear" class="visually-hidden">{{ 'general.general.phone' | t }}</label>
+            <input
+              id="contact-how-did-you-hear"
+              type="text"
+              placeholder="How Did You Hear About Us?*"
+              value=""
+              name="contact[how-did-you-hear]"
+              class="jc-input-field input-field {% if form.errors contains "phone" %}error{% endif %}">
+          </div>
+
+          <div class="input-wrapper">
+            <label for="contact-where-will-you-sell" class="visually-hidden">{{ 'general.general.message' | t }}</label>
+            <textarea
+              id="contact-where-will-you-sell"
+              name="contact[where-will-you-sell]"
+              placeholder="Where Will You Sell Our Products?*"
+              class="jc-input-field input-field jc-input-field-wholesale-area {% if form.errors contains "comments" %}error{% endif %}">{{ form.comments }}</textarea>
+          </div>
+      
+      <div class="input-wrapper">
+            <label for="contact-products-and-quantities" class="visually-hidden">{{ 'general.general.message' | t }}</label>
+            <textarea
+              id="contact-products-and-quantities"
+              name="contact[products-and-quantities]"
+              placeholder="What Product And Quantities Are You Interested In?*"
+              class="jc-input-field input-field jc-input-field-wholesale-area {% if form.errors contains "comments" %}error{% endif %}">{{ form.comments }}</textarea>
+          </div>
+
+          <input class="button jc-contact-submit-btn" type="submit" value="{{ 'general.contact.submit' | t }}">
+        {% endif %}
+
+      {% endform %}
+    </div>
+  </div>
+</div>

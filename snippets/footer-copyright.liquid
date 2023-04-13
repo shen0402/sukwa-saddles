@@ -1,0 +1,32 @@
+{% capture year %}
+  {{ 'now' | date: '%Y' }}
+{% endcapture %}
+
+{% unless template == 'password' %}
+<div class="jc-footer-menu-wrapper">
+  <div class="jc-footer-menu-link-wholesale-wrapper">
+    <a class="jc-footer-menu-link jc-footer-menu-link-wholesale" href="/pages/wholesale">Interested in Wholesale?</a>
+  </div>
+  <a class="jc-footer-menu-link" href="/pages/privacy-policy">PRIVACY POLICY&nbsp;&nbsp;|</a>
+  <a class="jc-footer-menu-link" href="/pages/shipping-policy">&nbsp;SHIPPING&nbsp;|</a>
+  <a class="jc-footer-menu-link" href="/a/returns">RETURNS&nbsp;|</a>
+  <a class="jc-footer-menu-link" href="/pages/terms-and-conditions">TERMS & CONDITIONS</a>
+</div>
+{% endunless %}
+
+<p class="footer-copyright" role="contentinfo">
+  <span>
+    {{ 'layout.footer.copyright_html' | t: year: year, shop_name: shop.name }}
+  </span>
+  <br>
+  <span>
+    Designed by <a class="jc-footer-menu-link" href="https://www.sidekickwebstudio.com/" target="_blank">Sidekick Web Studio</a>
+  </span>
+  {% comment %}
+  <span class="footer-copyright-attribution">
+    {{ 'layout.footer.copyright_credit_html' | t }}
+    <br>
+    {{ powered_by_link }}
+  </span>
+  {% endcomment %}
+</p>

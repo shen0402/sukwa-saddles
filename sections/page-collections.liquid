@@ -1,0 +1,156 @@
+{% assign using_linklist = false %}
+{% if linklists['all-collections'] and linklists['all-collections'].links.size > 0 %}
+  {% assign using_linklist = true %}
+{% endif %}
+
+<div class="collections-list">
+  <h1 class="jc-page-title page-title">Collections</h1>
+  {% if using_linklist %}
+  <div class="jc-flex-row-collection-list">
+    {% for link in linklists['all-collections'].links %}
+      {% assign collection = link.object %}
+
+            <div class="jc-flex-col-collection-list">
+              <div class="jc-flex-col-inner-collection-list" {% if collection.image %}style="background-image: url({{ collection.image | img_url: '1100x' }});"{% endif %}>
+                <a href="{{collection.url}}" class="jc-flex-col-overlay-collection-list"></a>
+                <div class="jc-flex-col-content-collection-list">
+                  <h3 class="jc-flex-col-heading-collection-list">{{collection.title}}</h3>
+                  <div class="jc-flex-col-btn-wrapper-collection-list"><a href="{{collection.url}}" class="button w-inline-block">
+                      <div>Shop Now</div>
+                    </a></div>
+                </div>
+              </div>
+            </div>
+
+       {% comment %}
+      {%
+        include 'collection-item-block',
+        first_product: true,
+        show_description: section.settings.show_description
+      %}
+     {% endcomment %}
+    {% endfor %}
+    </div>
+  {% else %}
+    {% for collection in collections %}
+      {%
+        include 'collection-item-block',
+        first_product: true,
+        show_description: section.settings.show_description
+      %}
+    {% endfor %}
+  {% endif %}
+</div>
+
+<style type="text/css">
+
+  .collections-list {
+    padding-top: 0px;
+  }
+  .jc-flex-row-collection-list {
+    margin-top: 80px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+  }
+
+  .jc-flex-col-collection-list {
+    height: 350px;
+    padding-right: 20px;
+    padding-left: 20px;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 33.3333%;
+    -ms-flex: 0 33.3333%;
+    flex: 0 33.3333%;
+  }
+
+  .jc-flex-col-inner-collection-list {
+    position: relative;
+    height: 100%;
+    background-image: url("//cdn.shopify.com/s/files/1/0066/2290/4405/collections/product-placeholder-12_736x736.jpg");
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .jc-flex-col-overlay-collection-list {
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    right: 0%;
+    bottom: 0%;
+    background-color: rgba(56, 60, 67, 0.5);
+  }
+
+  .jc-flex-col-content-collection-list {
+    position: relative;
+    top: 50%;
+    padding-right: 20px;
+    padding-left: 20px;
+    -webkit-transform: translate(0px, -50%);
+    -ms-transform: translate(0px, -50%);
+    transform: translate(0px, -50%);
+    color: #fff;
+    text-align: center;
+  }
+
+  .jc-flex-col-heading-collection-list {
+    margin-top: 0px;
+    margin-bottom: 15px;
+  }
+
+  @media screen and (max-width: 991px) {
+    .jc-flex-col-collection-list {
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+    .jc-flex-col-collection-list {
+      height: 300px;
+      margin-bottom: 40px;
+      -webkit-flex-basis: 100%;
+      -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+    }
+
+    .jc-flex-row-collection-list {
+      margin-top: 40px;
+    }
+    
+  }
+
+  @media screen and (max-width: 767px) {
+
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collections page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show descriptions",
+      "default": true
+    }
+  ]
+}
+
+{% endschema %}

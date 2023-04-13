@@ -1,0 +1,18 @@
+<div class="product-gallery">
+  {% for image in product.images %}
+    {% assign data_attr = image.id | prepend: 'data-image-id="' | append: '"' %}
+    <div class="product-image">
+      {%
+        include 'rimg',
+        img: image,
+        size: '2048x2048',
+        attr: data_attr
+        lazy: true
+      %}
+    </div>
+  {% else %}
+    <div class="product-image product-image-none">
+      <img src="{{ 'no-image.svg' | asset_url }}">
+    </div>
+  {% endfor %}
+</div>

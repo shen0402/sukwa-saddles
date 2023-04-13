@@ -1,0 +1,18 @@
+
+{% if paginate.pages > 1 %}
+  <ul class="pagination">
+
+    {% for part in paginate.parts %}
+      {% if part.is_link %}
+        <li class="pagination-link">{{ part.title | link_to: part.url }}</li>
+      {% else %}
+        {% if part.title == '&hellip;' %}
+          <li class="pagination-link pagination-ellipsis">{{ part.title }}</li>
+        {% else %}
+          <li class="pagination-link pagination-active">{{ part.title }}</li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
+  </ul>
+{% endif %}

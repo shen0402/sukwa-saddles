@@ -1,0 +1,95 @@
+{% assign parent = product %}
+{% assign parent_collection = collection %}
+
+<div class="product-sidebar"></div>
+
+<div
+  data-product-list
+  {% if section.settings.enable_single %}data-single-product{% endif %}
+  {% if collection.products_count < 2 %}class="product-list-single"{% endif %}>
+
+  {%
+    include 'product',
+    show_pagination: false
+  %}
+
+  {% if section.settings.enable_single == false %}
+    {%
+      include 'product-rack',
+      parent_collection: parent_collection,
+      parent: parent,
+      limit: 20
+    %}
+  {% endif %}
+</div>
+
+{% if section.settings.enable_single == true %}
+  <div class="product-related-single-container">
+    {% include 'product-related' %}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Product pages",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_product_vendor",
+      "label": "Show product vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_related",
+      "label": "Enable related products"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_single",
+      "label": "Enable single product view"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_spb",
+      "label": "Show dynamic checkout button",
+      "default": true,
+      "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
+    },
+    {
+      "type": "header",
+      "content": "Sharing"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_widget_facebook",
+      "label": "Share on Facebook"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_widget_twitter",
+      "label": "Tweet on Twitter"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_widget_pinterest",
+      "label": "Pin on Pinterest"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_widget_fancy",
+      "label": "Add to Fancy"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_widget_google_plus",
+      "label": "+1 on Google Plus"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_widget_email",
+      "label": "Send as an e-mail"
+    }
+  ]
+}
+
+{% endschema %}

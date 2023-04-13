@@ -1,0 +1,246 @@
+{% assign video_image_crop = section.settings.cover_image_position | split: '-' | first %}
+
+<section
+  class="home-video-section"
+  data-section-id="{{ section.id }}"
+  data-section-type="home-video"
+  data-home-section
+>
+  <article class="home-video-container">
+    {% if section.settings.overlay_show %}
+      <div
+        class="
+          home-video-overlay
+          home-video-overlay-heading-{{ section.settings.overlay_header_alignment }}
+          {% if section.settings.cover_image %}
+            home-image-crop-{{ section.settings.cover_image_position }}
+          {% endif %}
+        "
+        {% if section.settings.cover_image %}
+          {%
+            include 'rimg',
+            img: section.settings.cover_image,
+            size: '2048x',
+            crop: video_image_crop
+            lazy: true,
+            background: true
+          %}
+        {% endif %}
+      >
+        {% if section.settings.cover_image %}
+          {%
+            include 'rimg',
+            img: section.settings.cover_image,
+            class: 'home-video-image'
+            size: '2048x',
+            crop: video_image_crop,
+            lazy: true
+          %}
+        {% endif %}
+
+        <div
+          class="
+            home-video-cover-overlay
+            overlay-{{ section.settings.overlay_style }}
+            overlay-opacity-{{ section.settings.overlay_opacity }}
+          "
+        >
+
+          {% if section.settings.title != blank %}
+            <h2 class="home-video-overlay-heading">{{ section.settings.title }}</h2>
+          {% endif %}
+
+          <button class="home-video-overlay-button" data-home-video-play>
+            <span
+              class="home-video-cover-icon home-video-play"
+            >
+              {%- include 'icon-play-large' -%}
+            </span>
+
+            <span class="home-video-cover-icon home-video-loading hide">
+              {%- include 'icon-loading-large' -%}
+            </span>
+          </button>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="home-video-wrapper {{ section.settings.aspect_ratio }}">
+      {% assign video_src = '//www.youtube.com/embed/_9VUPq3SxOc?rel=0&showinfo=0&vq=720&autoplay=0&enablejsapi=1' %}
+      {% if section.settings.video_url.type == "vimeo" %}
+        {% assign video_src = '//player.vimeo.com/video/'
+          | append: section.settings.video_url.id
+          | append: '?byline=0&portrait=0&badge=0&autoplay=0'
+         %}
+      {% endif %}
+      {% if section.settings.video_url.type == "youtube" %}
+        {% assign video_src = '//www.youtube.com/embed/'
+          | append: section.settings.video_url.id
+          | append: '?rel=0&showinfo=0&vq=720&autoplay=0&enablejsapi=1'
+         %}
+      {% endif %}
+
+      <iframe
+        class="home-video-iframe"
+        frameborder="0"
+        allowfullscreen
+        src="{{ video_src }}"
+      ></iframe>
+
+      <button
+        class="home-video-close"
+        data-home-video-close
+      >
+        {% include 'icon-close' %}
+      </button>
+    </div>
+  </article>
+</section>
+
+{% schema %}
+{
+  "name": "Video",
+  "class": "home-video",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "id": "video_url",
+      "type": "video_url",
+      "label": "Youtube or Vimeo link",
+      "accept": ["youtube", "vimeo"],
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+    },
+    {
+      "id": "aspect_ratio",
+      "type": "select",
+      "label": "Video aspect ratio",
+      "default": "aspect-ratio-16-by-9",
+      "options": [
+        {
+          "value": "aspect-ratio-16-by-9",
+          "label": "16:9"
+        },
+        {
+          "value": "aspect-ratio-21-by-9",
+          "label": "21:9"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "id": "overlay_show",
+      "type": "checkbox",
+      "label": "Show overlay",
+      "default": true
+    },
+    {
+      "id": "overlay_style",
+      "type": "select",
+      "label": "Style",
+      "default": "accent",
+      "options": [
+        {
+          "value": "light",
+          "label": "Dark"
+        },
+        {
+          "value": "dark",
+          "label": "Light"
+        },
+        {
+          "value": "accent",
+          "label": "Accent"
+        }
+      ]
+    },
+    {
+      "id": "overlay_opacity",
+      "type": "range",
+      "label": "Opacity",
+      "default": 50,
+      "min": 1,
+      "max": 99,
+      "step": 1,
+      "unit": "%"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Video"
+    },
+    {
+      "type": "select",
+      "id": "overlay_header_alignment",
+      "label": "Heading and text alignment",
+      "options": [
+        { "label": "Above button", "value": "above-button" },
+        { "label": "Below button", "value": "below-button" }
+      ],
+      "default": "above-button"
+    },
+    {
+      "id": "cover_image",
+      "type": "image_picker",
+      "label": "Cover image"
+    },
+    {
+      "id": "cover_image_position",
+      "type": "select",
+      "label": "Cover image position",
+      "default": "center-center",
+      "options": [
+        {
+          "label": "Top left",
+          "value": "top-left"
+        },
+        {
+          "label": "Top center",
+          "value": "top-center"
+        },
+        {
+          "label": "Top right",
+          "value": "top-right"
+        },
+        {
+          "label": "Center left",
+          "value": "center-left"
+        },
+        {
+          "label": "Center",
+          "value": "center-center"
+        },
+        {
+          "label": "Center right",
+          "value": "center-right"
+        },
+        {
+          "label": "Bottom left",
+          "value": "bottom-left"
+        },
+        {
+          "label": "Bottom center",
+          "value": "bottom-center"
+        },
+        {
+          "label": "Bottom right",
+          "value": "bottom-right"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Video",
+      "name": "Video"
+    }
+  ]
+}
+
+{% endschema %}

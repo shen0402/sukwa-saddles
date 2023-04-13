@@ -1,0 +1,17 @@
+{% comment %}
+  @param show_pagination
+         If true, show the product pagination.
+
+  @param product
+         The product to render.
+{% endcomment %}
+
+<article class="product" data-product-id="{{ product.id }}">
+  {% if show_pagination %}
+    {% include 'product-pagination' %}
+  {% endif %}
+  <div class="product-body">
+    {% include 'product-gallery' %}
+    {% include 'product-details' %}
+  </div>
+</article>

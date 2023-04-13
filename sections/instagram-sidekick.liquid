@@ -1,0 +1,58 @@
+ <div class="instagram-header-container"
+    style="background: {{ section.settings.instagram_background }};"
+  >
+    <h2 class="instagram-heading">
+      {{ section.settings.instagram_heading | escape }}
+    </h2>
+
+    <a class="instagram-link" target="_blank" data-instagram-link>
+      <span class="instagram-link-container home-section-link">
+        <svg role="img" class="navigation-social-item-icon">
+          <use xlink:href="#icon-social-instagram"></use>
+        </svg>
+
+        <span class="instagram-link-text" data-instagram-link-text></span>
+
+        {%- include 'icon-arrow-right' -%}
+      </span>
+    </a>
+  </div>
+<div class="jc-instagram-wrapper">
+<!-- LightWidget WIDGET --><script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script><iframe src="https://cdn.lightwidget.com/widgets/fb00e752f099505ea9ee605b3f945df9.html" scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width:100%;border:0;overflow:hidden;"></iframe>
+
+
+
+</div>
+
+{% schema %}
+  {
+    "name": "Instagram Section New",
+    "settings": [
+
+	{
+      "type": "text",
+      "id": "instagram_heading",
+      "label": "Heading",
+      "default": "FOLLOW US ON INSTAGRAM"
+    },
+	{
+      "type": "color",
+      "id": "instagram_background",
+      "label": "Header color",
+      "default": "#eed4cb"
+    }
+	],
+"presets": [
+    {
+      "name": "Instagram feed New",
+      "category": "Social Media"
+    }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

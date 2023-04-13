@@ -1,0 +1,55 @@
+<article class="article-item" data-article-item>
+
+  {% if article.image %}
+    <a href="{{ article.url }}" class="article-item-image-link">
+      <figure
+        class="article-item-image
+        {% if section.settings.image_crop %}
+          article-item-image-crop-{{ section.settings.image_crop }}
+        {% endif %}"
+        aria-label="{{ article.image.alt | escape  }}"
+        {%
+          include 'rimg',
+          img: article.image,
+          size: '600x',
+          crop: 'center',
+          lazy: true,
+          background: true
+        %}
+      >
+        {%
+          include 'rimg',
+          img: article.image,
+          size: '600x',
+          crop: 'center',
+          lazy: true
+        %}
+      </figure>
+    </a>
+  {% endif %}
+
+  <div class="article-item-content-wrapper">
+    <div class="article-item-content">
+      <h1 class="article-item-title">
+        <a href="{{ article.url }}">
+          {{ article.title | truncatewords: 10 }}
+        </a>
+      </h1>
+      <p class="article-item-date-author">{{ article.published_at | date: format: 'short_month' }}
+        {% if section.settings.show_author %}
+          {{ article.author | prepend: ' &mdash; ' }}
+        {% endif %}
+      </p>
+      <div class="article-item-body rte">
+        {% if section.settings.show_excerpt %}
+          {% if article.excerpt != blank %}
+            {{ article.excerpt }}
+          {% else %}
+            <p>{%- include 'truncate-words', truncate_text: article.excerpt_or_content, truncate_length: 20 -%}</p>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</article>

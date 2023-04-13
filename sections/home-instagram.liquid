@@ -1,0 +1,112 @@
+{%- capture instagrm_template -%}
+  <a class="instagram-photo-container" target="_blank">
+    <div class="instagram-photo"></div>
+    <div class="instagram-overlay">
+      <div class="instagram-overlay-content">
+        <div class="instagram-likes">
+          <svg role="img" class="instagram-heart-icon navigation-social-item-icon">
+            <use xlink:href="#icon-social-heart"></use>
+          </svg>
+        </div>
+        <div class="instagram-caption"></div>
+        <div class="instagram-date"></div>
+      </div>
+    </div>
+  </a>
+{%- endcapture -%}
+
+<script
+  type="application/json"
+  data-section-type="home-instagram"
+  data-section-id="{{ section.id }}"
+  data-section-data
+>
+  {
+    "months": [
+      {{ 'instagram.months.january' | t | json }},
+      {{ 'instagram.months.february' | t | json }},
+      {{ 'instagram.months.march' | t | json }},
+      {{ 'instagram.months.april' | t | json }},
+      {{ 'instagram.months.may' | t | json }},
+      {{ 'instagram.months.june' | t | json }},
+      {{ 'instagram.months.july' | t | json }},
+      {{ 'instagram.months.august' | t | json }},
+      {{ 'instagram.months.september' | t | json }},
+      {{ 'instagram.months.october' | t | json }},
+      {{ 'instagram.months.november' | t | json }},
+      {{ 'instagram.months.december' | t | json }}
+    ],
+    "dateFormat": {{ 'date_formats.short_month' | t | json }},
+    "template" : {{ instagrm_template | strip_newlines | json }},
+    "token" : {{ section.settings.instagram_token | default: false | json }},
+    "error" : {{'general.general.instagram_error' | t | json }}
+  }
+</script>
+
+{% if section.settings.instagram_heading != blank %}
+  <div class="instagram-header-container"
+    style="background: {{ section.settings.instagram_background }};"
+  >
+    <h2 class="instagram-heading">
+      {{ section.settings.instagram_heading | escape }}
+    </h2>
+
+    <a class="instagram-link" target="_blank" data-instagram-link>
+      <span class="instagram-link-container home-section-link">
+        <svg role="img" class="navigation-social-item-icon">
+          <use xlink:href="#icon-social-instagram"></use>
+        </svg>
+
+        <span class="instagram-link-text" data-instagram-link-text></span>
+
+        {%- include 'icon-arrow-right' -%}
+      </span>
+    </a>
+  </div>
+{% endif %}
+
+<div class="instagram-photo-wrapper" data-instagram-photos>
+  {% for i in (1..6) %}
+    <span class="instagram-photo-container instagram-placeholder">
+      {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+      {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+    </span>
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": "Instagram feed",
+  "class": "home-instagram",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "text",
+      "id": "instagram_token",
+      "label": "Access token ([?](http:\/\/instagram.pixelunion.net))"
+    },
+    {
+      "type": "text",
+      "id": "instagram_heading",
+      "label": "Heading",
+      "default": "Instagram"
+    },
+    {
+      "type": "color",
+      "id": "instagram_background",
+      "label": "Header color",
+      "default": "#eed4cb"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram feed",
+      "category": "Social Media"
+    }
+  ]
+}
+
+{% endschema %}

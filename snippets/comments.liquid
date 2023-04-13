@@ -1,0 +1,96 @@
+{% if article.comments_enabled? %}
+  <aside class="comments">
+
+    {% if article.comments_count > 0 %}
+      <div class="comments-list">
+
+        <h1 class="visually-hidden">{{ 'blogs.article_item.comment_count' | t: count: article.comments_count }}</h1>
+
+        {% paginate article.comments by 10 %}
+          {% for comment in article.comments %}
+            <article class="comment" id="comment-{{ comment.id }}">
+              <h1 class="comment-author">{{ comment.author }}</h1>
+              <a href="{{ comment.url }}" class="comment-date">{{ comment.created_at | date: format: 'short_month' }}</a>
+              <div class="rte comment-body">{{ comment.content }}</div>
+            </article>
+          {% endfor %}
+
+          {% if paginate.previous or paginate.next %}
+            {% include 'pagination' %}
+          {% endif %}
+
+        {% endpaginate %}
+      </div>
+    {% endif %}
+
+    <div class="comments-submit">
+      <h2 class="comment-form-title">{{ 'blogs.article_item.leave_a_comment' | t }}</h2>
+
+      {% form article %}
+
+        {% if form.posted_successfully? %}
+          <p>
+          {% if blog.moderated? %}
+            {{ 'blogs.article_item.comment_pending' | t }}
+          {% else %}
+            {{ 'blogs.article_item.comment_success' | t }}
+          {% endif %}
+          </p>
+        {% endif %}
+
+        {% if form.errors %}
+          <p class="error-message">{{ 'blogs.article_item.comment_error' | t }}</p>
+        {% endif %}
+
+        <div class="input-wrapper {% if form.errors contains "author" %}error{% endif %}">
+          <label 
+            class="visually-hidden"
+            for="comment-name">
+            {{ 'general.general.name' | t }} {{ form.errors.messages["author"] }}
+          </label>
+          <input 
+            class="input-field" 
+            id="comment-name" 
+            name="comment[author]"
+            type="text" 
+            placeholder="Name" 
+            value="{{ form.author }}">
+        </div>
+
+        <div class="input-wrapper {% if form.errors contains "email" %}error{% endif %}">
+          <label 
+            class="visually-hidden"
+            for="comment-email">
+            {{ 'general.general.email' | t }} {{ form.errors.messages["email"] }}
+          </label>
+          <input 
+            class="input-field" 
+            id="comment-email" 
+            name="comment[email]"
+            type="email" 
+            placeholder="{{ 'general.general.email_placeholder' | t }}" 
+            value="{{ form.email }}">
+        </div>
+
+        <div class="input-wrapper {% if form.errors contains "body" %}error{% endif %}">
+          <label 
+            class="visually-hidden"
+            for="comment-body">
+            {{ 'general.general.message' | t }} {{ form.errors.messages["body"] }}
+          </label>
+          <textarea 
+            class="input-field" 
+            name="comment[body]" 
+            id="comment-body" 
+            placeholder="{{ 'general.general.message_placeholder' | t }}">{{ form.body }}</textarea>
+        </div>
+
+        <div class="input-wrapper">
+          <input type="submit" class="button" value="{{ 'blogs.article_item.submit' | t }}">
+        </div>
+
+      {% endform %}
+    </div>
+
+  </aside>
+{% endif %}

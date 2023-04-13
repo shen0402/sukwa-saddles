@@ -1,0 +1,39 @@
+{% comment %}
+  @param enable_payment_icons Boolean
+{% endcomment %}
+
+<footer class="main-navigation-footer">
+  {% if enable_payment_icons and shop.enabled_payment_types.size > 0 %}
+    <div class="payment-types">
+      {% for type in shop.enabled_payment_types %}
+        <div class="payment-type">
+          {{ type | payment_type_svg_tag }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="main-footer-tools">
+    {% if settings.enable_currency_switcher %}
+      <div class="select-wrapper currency-switcher">
+        <select
+          class="input-select"
+          name="currencies"
+          data-currency-converter
+          aria-label="{{ 'general.currency.label' | t }}">
+          {% capture codes %},USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK,{% endcapture %}
+          {% assign supported_codes = settings.currency_switcher_supported_currencies | escape | split: ' ' %}
+          <option value="{{ shop.currency }}" selected="selected">{{ shop.currency }}</option>
+          {% for code in supported_codes %}
+            {% if code != shop.currency and codes contains code %}
+              <option value="{{ code }}">{{ code }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+    {% endif %}
+
+    {% include 'footer-copyright' %}
+  </div>
+
+</footer>

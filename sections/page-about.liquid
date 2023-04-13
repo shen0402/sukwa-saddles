@@ -1,0 +1,27 @@
+{% if section.settings.image %}
+  {%
+    include 'rimg',
+    img: section.settings.image,
+    size: '800x',
+    lazy: true
+  %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "Featured image",
+  "class": "page-featured-image",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Featured image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    }
+  ]
+}
+
+{% endschema %}

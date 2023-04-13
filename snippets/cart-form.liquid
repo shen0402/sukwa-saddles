@@ -1,0 +1,15 @@
+{% if cart.item_count > 0 %}
+  <form class="cart-form {% unless in_sidebar %}main-cart{% endunless %}" action="/cart" method="post" data-cart-form>
+
+    {% include 'cart-items' %}
+
+    {% include 'cart-footer', in_sidebar: in_sidebar %}
+
+  </form>
+
+{% else %}
+  {%- capture continue_link -%}
+    <a href="{{ shop.url }}/collections/all">{{ 'cart.general.continue_link' | t }}</a>
+  {%- endcapture -%}
+  <p class="empty">{{ 'cart.general.empty_html' | t: continue_link: continue_link }}</p>
+{% endif %}

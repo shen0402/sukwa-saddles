@@ -1,0 +1,152 @@
+{% comment %}
+  @param video_id A unique ID for the video.
+{% endcomment %}
+
+{%- if block.settings.video_url != blank -%}
+  {%- capture video_code -%}
+    <div class="slideshow-slide-video-wrapper">
+      <div
+        class="slideshow-slide-video-background"
+        id="player-{{ video_id }}-{{ section.id }}"
+        data-video-id="{{ block.settings.video_url.id }}"
+        data-video-type="{{ block.settings.video_url.type }}"
+      ></div>
+    </div>
+  {%- endcapture -%}
+{%- endif -%}
+
+{% comment %}
+  Start image for slide
+{% endcomment %}
+
+{% assign image_size = '2048x2048' %}
+{% assign display_info = false %}
+
+{% assign crop = block.settings.image_position | split: '-' | last %}
+
+{% if
+  block.settings.heading != blank
+  or block.settings.subheading != blank
+  or block.settings.button_label != blank
+%}
+  {% assign display_info = true %}
+{% endif %}
+
+{% if display_info or block.settings.button_link != blank %}
+  {% assign display_info = true %}
+{% endif %}
+
+{% if section.settings.overlay_show %}
+  {% capture overlay_settings %}
+    overlay-{{ section.settings.overlay_style }}
+    overlay-opacity-{{ section.settings.overlay_opacity }}
+  {% endcapture %}
+{% endif %}
+
+{% capture opening_tag %}div{% endcapture %}
+{% capture closing_tag %}div{% endcapture %}
+
+{% if block.settings.button_label == blank and block.settings.button_link != blank %}
+  {% capture opening_tag %}a href="{{ block.settings.button_link }}"{% endcapture %}
+  {% capture closing_tag %}a{% endcapture %}
+{% endif %}
+
+<article
+  class="
+    slideshow-slide
+    {% unless block.settings.image %}
+      slideshow-slide-no-image
+    {% endunless %}
+  "
+  data-slideshow-slide
+  {{ block.shopify_attributes }}
+>
+  <figure
+    {% if block.settings.image %}
+      {%
+        include 'rimg',
+        background: true,
+        img: block.settings.image,
+        size: image_size,
+        crop: crop,
+        lazy: true
+      %}
+    {% endif %}
+    class="
+      slideshow-slide-content
+      home-section-height-fullscreen
+      {% if block.settings.image %}
+        home-section home-image-crop-{{ block.settings.image_position }}
+      {% endif %}
+    "
+  >
+    {% if block.settings.image %}
+      {%
+        include 'rimg',
+        class: 'slideshow-slide-image'
+        img: block.settings.image,
+        size: image_size,
+        crop: crop,
+        lazy: true
+      %}
+    {% else %}
+      {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+      {% assign placeholder_image_style = 'lifestyle-' | append: current %}
+      {{ placeholder_image_style | placeholder_svg_tag: 'placeholder-svg' }}
+    {% endif %}
+    {% if block.settings.video_url != blank %}
+      {{ video_code }}
+    {% endif %}
+  </figure>
+  {% if display_info %}
+    <{{ opening_tag }} class="slideshow-slide-info-container {{ overlay_settings | strip_newlines }}">
+      <div class="slideshow-slide-info">
+        {% if block.settings.heading != blank %}
+          <h2 class="slideshow-slide-heading jc-slideshow-slide-heading">
+            {{ block.settings.heading | escape }}
+          </h2>
+        {% endif %}
+
+        {% if block.settings.subheading != blank %}
+          <h3 class="slideshow-slide-subheading jc-slideshow-slide-subheading">
+            {{ block.settings.subheading | escape }}
+          </h3>
+        {% endif %}
+
+        {% if block.settings.button_label != blank %}
+          {% if
+            block.settings.button_link contains 'youtube'
+            or block.settings.button_link contains 'youtu.be'
+            or block.settings.button_link contains 'vimeo'
+          %}
+            <a
+              class="slideshow-button slideshow-slide-video-button"
+              href="#modal-{{ video_id }}-{{ section.id }}"
+              data-slideshow-video-modal-open
+            >
+              <span class="slideshow-slide-video-button-content">
+                <span class="slideshow-slide-video-button-label">{{ block.settings.button_label | escape }}</span>
+                <span class="slideshow-slide-video-icon slideshow-slide-video-play">
+                  {%- include 'icon-play-small' -%}
+                </span>
+                <span class="slideshow-slide-video-icon slideshow-slide-video-loading hide">
+                  {%- include 'icon-loading-small' -%}
+                </span>
+              </span>
+            </a>
+            {% include 'slideshow-slide-video-modal' %}
+          {% else %}
+            <a
+              class="slideshow-button button jc-slideshow-button"
+              {% if block.settings.button_link != blank %}
+                href="{{ block.settings.button_link }}"
+              {% endif %}
+            >
+              {{ block.settings.button_label | escape }}
+            </a>
+          {% endif %}
+        {% endif %}
+      </div>
+    </{{ closing_tag }}>
+  {% endif %}
+</article>

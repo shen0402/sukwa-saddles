@@ -1,0 +1,216 @@
+{% assign product = all_products[section.settings.product] %}
+
+{% assign onboarding = true %}
+{% assign product_title = 'onboarding.title' | t %}
+{% assign product_link = '#' %}
+{% assign placeholder_style = 'product-1' %}
+{% assign price = 1999 %}
+{% assign price_varies = false %}
+{% assign compare_at_price = 1999 %}
+{% assign compare_at_price_varies = false  %}
+{% assign on_sale = false %}
+
+{% unless product.empty? %}
+  {% assign onboarding = false %}
+  {% assign selected_variant = product.selected_or_first_available_variant %}
+  {% assign product_title = product.title %}
+  {% assign product_link = product.url | within: product.collections.first %}
+  {% assign placeholder_style = 'image' %}
+  {% assign price = selected_variant.price %}
+  {% assign price_varies = product.price_varies %}
+  {% assign compare_at_price = selected_variant.compare_at_price %}
+  {% assign compare_at_price_varies = product.compare_at_price_varies %}
+
+  {% if compare_at_price > price %}
+    {% assign on_sale = true %}
+  {% endif %}
+{% endunless %}
+
+{% assign image = false %}
+{% if section.settings.image %}
+  {% assign image = section.settings.image %}
+{% elsif onboarding == false and product.featured_image %}
+  {% assign image = product.featured_image %}
+{% endif %}
+
+<section
+  class="
+    home-section
+    home-section-height-{{ section.settings.section_height }}
+    {% if onboarding %}home-section-onboarding{% endif %}
+    {% unless image %}home-section-no-image{% endunless %}
+  "
+  data-home-section
+>
+  <div
+    class="
+      home-section-image-container
+      home-image-crop-{{ section.settings.image_position }}
+    "
+    {% if image %}
+      {% assign crop = section.settings.image_position | split: '-' | last %}
+      {%
+        include 'rimg',
+        img: image,
+        size: '2048x2048',
+        crop: crop,
+        lazy: true,
+        background: true
+      %}
+    {% endif %}
+  >
+    {% if image %}
+      {%
+        include 'rimg',
+        img: image,
+        size: '2048x2048',
+        class: 'home-section-image',
+        lazy: true
+      %}
+    {% else %}
+      {{ placeholder_style | placeholder_svg_tag: 'home-section-image placeholder-svg' }}
+    {% endif %}
+  </div>
+
+  <div class="home-section-content" data-home-section-content>
+    {% if product.collections %}
+      <span class="home-section-subtitle">
+        {{ product.collections.first.title }}
+      </span>
+    {% endif %}
+
+    <h1 class="home-section-title">
+      {% if onboarding %}
+        {{ product_title }}
+      {% else %}
+        <a href="{{ product_link }}">
+          {{ product_title }}
+        </a>
+      {% endif %}
+    </h1>
+
+    <p class="home-section-text">
+      <span class="featured-product-price-minimum">
+        {% if price_varies or compare_at_price_varies and onsale == false %}
+          {{ 'products.product.from' | t }}
+        {% endif %}
+
+        <span data-money>{{ price | money }}</span>
+      </span>
+
+      {% if compare_at_price_varies == false and on_sale %}
+        <span
+          class="featured-product-price-compare"
+          data-money
+        >
+          {{ compare_at_price | money }}
+        </span>
+      {% endif %}
+    </p>
+
+    <a class="home-section-link" href="{{ product_link }}">
+      {{ 'view_product' | t }}
+      {%- include 'icon-arrow-right' -%}
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured product",
+  "class": "home-featured-product",
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_height",
+      "label": "Section height",
+      "default": "image-height",
+      "options": [
+        {
+          "value": "fullscreen",
+          "label": "Fullscreen"
+        },
+        {
+          "value": "image-height",
+          "label": "Image height"
+        }
+      ]
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image override",
+      "info": "Alternate image (optional)"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "info": "Adjust the focal point of the image. Note: This setting only makes an impact if you've set your section height to fullscreen.",
+      "default": "center-center",
+      "options": [
+        {
+          "label": "Top left",
+          "value": "top-left"
+        },
+        {
+          "label": "Top center",
+          "value": "top-center"
+        },
+        {
+          "label": "Top right",
+          "value": "top-right"
+        },
+        {
+          "label": "Center left",
+          "value": "center-left"
+        },
+        {
+          "label": "Center",
+          "value": "center-center"
+        },
+        {
+          "label": "Center right",
+          "value": "center-right"
+        },
+        {
+          "label": "Bottom left",
+          "value": "bottom-left"
+        },
+        {
+          "label": "Bottom center",
+          "value": "bottom-center"
+        },
+        {
+          "label": "Bottom right",
+          "value": "bottom-right"
+        }
+      ]
+    }
+  ],
+  "locales": {
+    "en": {
+      "view_product": "View product",
+      "onboarding": {
+        "title": "Your product's name"
+      }
+    }
+  },
+  "presets": [
+    {
+      "category": "Product",
+      "name": "Featured product",
+      "settings": {
+        "section_height": "image-height",
+        "image_position": "center-center"
+      }
+    }
+  ]
+}
+
+{% endschema %}

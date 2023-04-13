@@ -1,0 +1,96 @@
+{% assign username = section.settings.twitter_username | remove: '@' | escape | default: false %}
+{%- capture tweet_template -%}
+  <div class="twitter-tweet-wrapper">
+    <div class="twitter-tweet-content">
+      <div class="twitter-tweet"></div>
+
+      <a class="twitter-tweet-username" href="http://twitter.com/{{ username }}">
+        @{{ username }}
+      </a>
+    </div>
+  </div>
+{%- endcapture -%}
+
+<script
+  type="application/json"
+  data-section-type="home-twitter"
+  data-section-id="{{ section.id }}"
+  data-section-data
+  >
+  {
+    "username": {{ username | json }},
+    "retweets": {{ section.settings.retweets | json }},
+    "template": {{ tweet_template | json }}
+  }
+</script>
+
+<div class="widget-twitter">
+  {% if section.settings.twitter_heading != blank %}
+    <div class="twitter-header-container"
+      style="background: {{ section.settings.twitter_background }};"
+      >
+      <h2 class="twitter-heading">{{ section.settings.twitter_heading }}</h2>
+
+      {% if section.settings.twitter_username != blank %}
+        <a class="twitter-link" href="https://twitter.com/{{ section.settings.twitter_username | remove_first: '@' }}">
+          <span class="twitter-link-container home-section-link">
+            <svg role="img" class="navigation-social-item-icon">
+              <use xlink:href="#icon-social-twitter"></use>
+            </svg>
+
+            <span class="twitter-link-text">
+              @{{ section.settings.twitter_username | remove_first: '@' }}
+            </span>
+
+            {%- include 'icon-arrow-right' -%}
+          </span>
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="twitter-tweet-container" data-twitter-tweets></div>
+</div>
+
+{% schema %}
+{
+  "name": "Twitter feed",
+  "class": "home-twitter",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "text",
+      "id": "twitter_username",
+      "label": "Twitter username",
+      "default": "pixelunion"
+    },
+    {
+      "type": "checkbox",
+      "id": "retweets",
+      "label": "Show retweets"
+    },
+    {
+      "type": "text",
+      "id": "twitter_heading",
+      "label": "Heading",
+      "default": "Twitter"
+    },
+    {
+      "type": "color",
+      "id": "twitter_background",
+      "label": "Header color",
+      "default": "#eed4cb"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Twitter feed",
+      "category": "Social Media"
+    }
+  ]
+}
+
+{% endschema %}

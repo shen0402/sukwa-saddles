@@ -1,0 +1,468 @@
+{
+  "current": {
+    "body_text_color": "#383c43",
+    "accent_color": "#383c43",
+    "background_color": "#e1d8cd",
+    "button_color": "#ffffff",
+    "button_background_color": "#a84325",
+    "sidebar_background_color": "#ffffff",
+    "listing_text_color": "#ffffff",
+    "listing_text_background_color": "#e1d8cd",
+    "listing_text_background_alpha": 90,
+    "collection_color_default": "#e1d8cd",
+    "collection_1": "",
+    "collection_1_color": "#f6c3b2",
+    "collection_2": "",
+    "collection_2_color": "#eccec4",
+    "collection_3": "",
+    "collection_3_color": "#f2dad0",
+    "collection_4": "",
+    "collection_4_color": "#faeae4",
+    "collection_5": "",
+    "collection_5_color": "#f6c3b2",
+    "collection_6": "",
+    "collection_6_color": "#eccec4",
+    "collection_7": "",
+    "collection_7_color": "#f2dad0",
+    "collection_8": "",
+    "collection_8_color": "#faeae4",
+    "collection_9": "",
+    "collection_9_color": "#f6c3b2",
+    "collection_10": "",
+    "collection_10_color": "#eccec4",
+    "collection_11": "",
+    "collection_11_color": "#f2dad0",
+    "collection_12": "",
+    "collection_12_color": "#faeae4",
+    "font_headings": "playfair_display_n4",
+    "font_body": "quicksand_n4",
+    "font_testimonials_tweets": "font_headings",
+    "grid_spacing": "10px",
+    "enable_currency_switcher": false,
+    "currency_switcher_format": "money_with_currency_format",
+    "currency_switcher_supported_currencies": "INR GBP CAD USD AUD EUR JPY",
+    "currency_switcher_default": "USD",
+    "favicon": "shopify:\/\/shop_images\/sukwa-favicon.png",
+    "social_default_image": "",
+    "social_facebook_url": "https:\/\/www.facebook.com\/sukwasaddleblankets\/",
+    "social_twitter_url": "",
+    "social_google_url": "",
+    "social_pinterest_url": "",
+    "social_instagram_url": "https:\/\/www.instagram.com\/sukwasaddleblankets\/",
+    "social_vimeo_url": "",
+    "social_youtube_url": "",
+    "social_email_address": "info@sukwasaddleblankets.com",
+    "checkout_header_image": "",
+    "checkout_logo_image": "shopify:\/\/shop_images\/Sukwa_Final_Logo_AltLogo-Tag-Orange-min.png",
+    "checkout_logo_position": "left",
+    "checkout_logo_size": "medium",
+    "checkout_body_background_image": "",
+    "checkout_body_background_color": "#fff",
+    "checkout_input_background_color_mode": "white",
+    "checkout_sidebar_background_image": "",
+    "checkout_sidebar_background_color": "#fafafa",
+    "checkout_heading_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_body_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_accent_color": "#a84325",
+    "checkout_button_color": "#a84325",
+    "checkout_error_color": "#e32c2b",
+    "sections": {
+      "section-2": {
+        "type": "home-featured-collection",
+        "settings": {
+          "collection": "2019-trailblazer-collection",
+          "show_description": true,
+          "product_aspect_ratio": "original",
+          "manual_products": false
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo": "shopify:\/\/shop_images\/Sukwa_Final_Logo_AltLogo-Tag-Orange-min.png",
+          "sidebar_menu_1": "main-menu",
+          "sidebar_menu_2": "footer",
+          "navigation_style": "sidebar_stays",
+          "enable_payment_icons": false,
+          "show_announcement": false,
+          "homepage_announcement": false,
+          "announcement_text": "Use this banner to promote free shipping or another special offer!",
+          "announcement_text_mobile": "",
+          "announcement_link": "",
+          "announcement_color": "#a84325",
+          "announcement_background": "#a84325"
+        }
+      },
+      "page-blog": {
+        "type": "page-blog",
+        "settings": {
+          "pagination": 4,
+          "show_rss_link": false,
+          "show_tags": true,
+          "show_author": true,
+          "show_excerpt": true
+        }
+      },
+      "page-collection": {
+        "type": "page-collection",
+        "settings": {
+          "show_description": true,
+          "enable_tag_filtering": true,
+          "pagination": 12,
+          "product_aspect_ratio": "square"
+        }
+      },
+      "page-product": {
+        "type": "page-product",
+        "settings": {
+          "show_product_vendor": false,
+          "enable_related": true,
+          "enable_single": false,
+          "show_spb": true,
+          "share_widget_facebook": true,
+          "share_widget_twitter": false,
+          "share_widget_pinterest": false,
+          "share_widget_fancy": false,
+          "share_widget_google_plus": false,
+          "share_widget_email": false
+        }
+      },
+      "1549915399114": {
+        "type": "home-slideshow",
+        "blocks": {
+          "671b3b56-6f5d-4845-b210-cb8a800e5e2f": {
+            "type": "slide",
+            "settings": {
+              "video_url": "",
+              "image": "shopify:\/\/shop_images\/ridge-collection-min.jpg",
+              "image_position": "center-center",
+              "heading": "INTRODUCING THE RIDGE COLLECTION",
+              "subheading": "",
+              "button_link": "shopify:\/\/collections\/2020-2021-ridge-collection",
+              "button_label": "SHOP NOW"
+            }
+          },
+          "1549915399114-0": {
+            "type": "slide",
+            "settings": {
+              "video_url": "",
+              "image": "shopify:\/\/shop_images\/sukwa-trailblazer-hero-min.jpg",
+              "image_position": "center-center",
+              "heading": "SUKWA SADDLE BLANKETS",
+              "subheading": "Hand Crafted. Authentic. Inspiring.",
+              "button_link": "shopify:\/\/collections\/2019-trailblazer-collection",
+              "button_label": "Shop Now"
+            }
+          },
+          "1549915507207": {
+            "type": "slide",
+            "settings": {
+              "video_url": "",
+              "image": "shopify:\/\/shop_images\/slider-dolly-min.jpg",
+              "image_position": "center-center",
+              "heading": "The Dolly",
+              "subheading": "Stunning Detail. Three Color Variations.",
+              "button_link": "shopify:\/\/products\/the-dolly",
+              "button_label": "Buy Now"
+            }
+          },
+          "1549915399114-1": {
+            "type": "slide",
+            "settings": {
+              "video_url": "",
+              "image": "shopify:\/\/shop_images\/Custom_-min.jpeg",
+              "image_position": "center-center",
+              "heading": "Custom Woven",
+              "subheading": "Uniquely crafted just for you.",
+              "button_link": "shopify:\/\/products\/custom-woven",
+              "button_label": "Buy Now"
+            }
+          }
+        },
+        "block_order": [
+          "671b3b56-6f5d-4845-b210-cb8a800e5e2f",
+          "1549915399114-0",
+          "1549915507207",
+          "1549915399114-1"
+        ],
+        "settings": {
+          "should_autoplay": true,
+          "slide_autoplay": 8,
+          "overlay_show": true,
+          "overlay_style": "accent",
+          "overlay_opacity": 50
+        }
+      },
+      "page-collections": {
+        "type": "page-collections",
+        "settings": {
+          "show_description": true
+        }
+      },
+      "1549992136415": {
+        "type": "home-newsletter",
+        "settings": {
+          "background_color": "none",
+          "heading": "Sign up for our Email Newsletter",
+          "text": "<p>Keep up with the newest products and exciting news from Sukwa Saddle Blankets. <\/p>"
+        }
+      },
+      "page-about": {
+        "type": "page-about",
+        "settings": {
+          "image": ""
+        }
+      },
+      "1549997282222": {
+        "type": "home-testimonials",
+        "blocks": {
+          "1549997282222-0": {
+            "type": "testimonial",
+            "settings": {
+              "author": "Jordan",
+              "body": "One of the best and most unique blankets I’ve ever laid my hands on! One-of-a-kind, and stand out designs - something that I’ll keep forever and recommend to anyone!",
+              "author_location": ""
+            }
+          }
+        },
+        "block_order": [
+          "1549997282222-0"
+        ],
+        "settings": {
+          "section_height": "medium",
+          "background_color": "none",
+          "should_autoplay": true,
+          "slide_autoplay": 8
+        }
+      },
+      "page-cart": {
+        "type": "page-cart",
+        "settings": {
+          "enable_checkout_lock_icon": false,
+          "enable_cart_notes": false,
+          "show_shipping_calculator": false,
+          "shipping_calculator_default_country": "United States"
+        }
+      },
+      "page-password": {
+        "type": "page-password",
+        "settings": {
+          "newsletter_title": "",
+          "newsletter_text": "<p>Sign up for our email list and stay up to date on the latest Sukwa Saddle Blankets news!<\/p>"
+        }
+      },
+      "1583529133182": {
+        "type": "instagram-sidekick",
+        "settings": {
+          "instagram_heading": "FOLLOW US ON INSTAGRAM",
+          "instagram_background": "#383c43"
+        }
+      }
+    },
+    "content_for_index": [
+      "1549915399114",
+      "section-2",
+      "1549997282222",
+      "1583529133182",
+      "1549992136415"
+    ],
+    "blocks": {
+      "uppromote-affiliate-referral-customer-referral-89293-64c32457-930d-4cb9-9641-e24c0d9cf1f4": {
+        "type": "shopify:\/\/apps\/uppromote-affiliate-referral\/blocks\/customer-referral\/64c32457-930d-4cb9-9641-e24c0d9cf1f4",
+        "disabled": true,
+        "settings": {
+        }
+      },
+      "uppromote-affiliate-referral-message-bar-89293-64c32457-930d-4cb9-9641-e24c0d9cf1f4": {
+        "type": "shopify:\/\/apps\/uppromote-affiliate-referral\/blocks\/message-bar\/64c32457-930d-4cb9-9641-e24c0d9cf1f4",
+        "disabled": true,
+        "settings": {
+        }
+      }
+    }
+  },
+  "presets": {
+    "Elegant": {
+      "accent_color": "#b55f3b",
+      "background_color": "#efe7e4",
+      "body_text_color": "#606060",
+      "button_background_color": "#b55f3b",
+      "button_color": "#ffffff",
+      "collection_1_color": "#f6c3b2",
+      "collection_2_color": "#eccec4",
+      "collection_3_color": "#f2dad0",
+      "collection_4_color": "#faeae4",
+      "collection_5_color": "#f6c3b2",
+      "collection_6_color": "#eccec4",
+      "collection_7_color": "#f2dad0",
+      "collection_8_color": "#faeae4",
+      "collection_9_color": "#f6c3b2",
+      "collection_10_color": "#eccec4",
+      "collection_11_color": "#f2dad0",
+      "collection_12_color": "#faeae4",
+      "collection_color_default": "#eed4cb",
+      "enable_currency_switcher": true,
+      "font_body": "varela_n4",
+      "font_headings": "playfair_display_n4",
+      "grid_spacing": "10px",
+      "listing_text_background_color": "#beb2b2",
+      "listing_text_background_alpha": 90,
+      "listing_text_color": "#ffffff",
+      "sidebar_background_color": "#ffffff",
+      "sections": {
+        "section-1": {
+          "type": "home-featured-product",
+          "settings": {
+          }
+        },
+        "section-2": {
+          "type": "home-featured-collection",
+          "settings": {
+          }
+        },
+        "header": {
+          "type": "header",
+          "settings": {
+            "navigation_style": "sidebar_stays",
+            "enable_payment_icons": true
+          }
+        },
+        "page-blog": {
+          "type": "page-blog",
+          "settings": {
+            "pagination": 4
+          }
+        },
+        "page-collection": {
+          "type": "page-collection",
+          "settings": {
+            "pagination": 12
+          }
+        },
+        "page-product": {
+          "type": "page-product",
+          "settings": {
+            "enable_related": true
+          }
+        }
+      },
+      "content_for_index": [
+        "section-1",
+        "section-2"
+      ]
+    },
+    "Editorial": {
+      "accent_color": "#000000",
+      "background_color": "#ffffff",
+      "body_text_color": "#000000",
+      "button_background_color": "#000000",
+      "button_color": "#ffffff",
+      "collection_1_color": "#f6f6f6",
+      "collection_2_color": "#f6f6f6",
+      "collection_3_color": "#f6f6f6",
+      "collection_4_color": "#f6f6f6",
+      "collection_5_color": "#f6f6f6",
+      "collection_6_color": "#f6f6f6",
+      "collection_7_color": "#f6f6f6",
+      "collection_8_color": "#f6f6f6",
+      "collection_9_color": "#f6f6f6",
+      "collection_10_color": "#f6f6f6",
+      "collection_11_color": "#f6f6f6",
+      "collection_12_color": "#f6f6f6",
+      "collection_color_default": "#f6f6f6",
+      "enable_currency_switcher": true,
+      "font_body": "neuzeit_office_n4",
+      "font_headings": "open_sans_n4",
+      "grid_spacing": "2px",
+      "listing_text_background_color": "#ffffff",
+      "listing_text_background_alpha": 90,
+      "listing_text_color": "#444444",
+      "sidebar_background_color": "#ffffff",
+      "content_for_index": [
+        "section-1"
+      ],
+      "sections": {
+        "section-1": {
+          "type": "home-featured-product",
+          "settings": {
+            "section_height": "fullscreen"
+          }
+        },
+        "page-blog": {
+          "type": "page-blog",
+          "settings": {
+            "pagination": 4
+          }
+        },
+        "page-collection": {
+          "type": "page-collection",
+          "settings": {
+            "enable_tag_filtering": false,
+            "pagination": 12
+          }
+        }
+      }
+    },
+    "Organic": {
+      "accent_color": "#6865d8",
+      "background_color": "#f9f9f9",
+      "body_text_color": "#383838",
+      "button_background_color": "#6865d8",
+      "button_color": "#ffffff",
+      "collection_1_color": "#d8d4e9",
+      "collection_2_color": "#bcc9e4",
+      "collection_3_color": "#e6eeb4",
+      "collection_4_color": "#f3f0e9",
+      "collection_5_color": "#f3f0e7",
+      "collection_6_color": "#87b2a2",
+      "collection_7_color": "#87b2a2",
+      "collection_8_color": "#87b2a2",
+      "collection_9_color": "#87b2a2",
+      "collection_10_color": "#87b2a2",
+      "collection_11_color": "#87b2a2",
+      "collection_12_color": "#87b2a2",
+      "collection_color_default": "#d0cfd6",
+      "font_body": "varela_n4",
+      "font_headings": "dosis_n4",
+      "listing_text_background_color": "#646f6f",
+      "listing_text_background_alpha": 60,
+      "listing_text_color": "#ffffff",
+      "sidebar_background_color": "#ffffff",
+      "sections": {
+        "section-1": {
+          "type": "home-featured-product",
+          "settings": {
+            "section_height": "fullscreen"
+          }
+        },
+        "section-2": {
+          "type": "home-featured-collection",
+          "settings": {
+          }
+        },
+        "header": {
+          "type": "header",
+          "settings": {
+            "navigation_style": "sidebar_stays"
+          }
+        },
+        "page-blog": {
+          "type": "page-blog",
+          "settings": {
+            "pagination": 6
+          }
+        },
+        "page-collection": {
+          "type": "page-collection",
+          "settings": {
+            "enable_tag_filtering": false
+          }
+        }
+      },
+      "content_for_index": [
+        "section-1",
+        "section-2"
+      ]
+    }
+  }
+}

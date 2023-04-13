@@ -1,0 +1,44 @@
+<article
+  class="testimonials-slide"
+  data-testimonials-slide
+  {{ block.shopify_attributes }}
+>
+  <div class="testimonials-slide-content">
+    {% if block.settings.author_image %}
+      <div class="testimonials-author-image">
+        {%
+          include 'rimg',
+          class: 'testimonials-author-image-img'
+          img: block.settings.author_image,
+          size: '60x60',
+          crop: 'center',
+          lazy: true
+        %}
+      </div>
+    {% endif %}
+
+    <div
+      class="
+        testimonials-slide-body jc-testimonials-slide-body
+        {% if block.settings.body == blank %} testimonials-slide-body-blank{% endif %}
+      "
+    >
+      {% if block.settings.body != blank %}
+        {{ block.settings.body | escape }}
+      {% endif %}
+      <svg role="img" class="testimonials-slide-icon">
+        <use xlink:href="#icon-quotations"></use>
+      </svg>
+    </div>
+
+    <div class="testimonials-slide-author">
+      {{ block.settings.author | escape }}
+      {% if block.settings.author_location != blank %}
+        <span class="testimonials-slide-location-in">
+          {{ 'testimonial_in' | t }}
+        </span>
+        {{ block.settings.author_location | escape }}
+      {% endif %}
+    </div>
+  </div>
+</article>

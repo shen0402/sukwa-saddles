@@ -1,0 +1,88 @@
+{% include 'collection-item-block',
+  block_tag: 'div',
+  first_product: false,
+  link_collection: false,
+  show_description: section.settings.show_description
+%}
+
+{% if collection.all_tags.size > 0 and section.settings.enable_tag_filtering %}
+  {% include 'tags-list' with collection %}
+{% endif %}
+
+<div class="collection-listing">
+  {% paginate collection.products by section.settings.pagination %}
+    {% assign row_helpers = 'rows-of-3' %}
+    {% assign remainder_on_3 = collection.products.size | modulo: 3 %}
+    {% unless remainder_on_3 == 0 %}
+      {% assign row_helpers = row_helpers | append: " remainder-on-3" %}
+    {% endunless %}
+
+    {% capture product_crop %}product-crop-{{ section.settings.product_aspect_ratio }}{% endcapture %}
+
+    <div class="collection-products product-list {{ product_crop }} {{ row_helpers }}">
+      {% for product in collection.products %}
+        {% include 'product-list-item', item: product %}
+      {% else %}
+        <p class="empty">
+          {{ 'collections.collection.empty' | t }}
+        </p>
+      {% endfor %}
+    </div>
+
+    {% include 'pagination' %}
+  {% endpaginate %}
+</div>
+
+{% schema %}
+{
+  "name": "Collection pages",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_tag_filtering",
+      "label": "Enable tag filtering",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "pagination",
+      "label": "Products per page",
+      "min": 6,
+      "max": 30,
+      "step": 6,
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "product_aspect_ratio",
+      "label": "Product aspect ratio",
+      "options": [
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "short",
+          "label": "Short"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "tall",
+          "label": "Tall"
+        }
+      ],
+      "default": "tall"
+    }
+  ]
+}
+
+{% endschema %}

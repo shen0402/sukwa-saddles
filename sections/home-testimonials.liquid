@@ -1,0 +1,148 @@
+<script
+  type="application/json"
+  data-section-type="home-testimonials"
+  data-section-id="{{ section.id }}"
+  data-section-data
+>
+  {
+    "should_autoplay": {{ section.settings.should_autoplay | json }},
+    "autoplay": {{ section.settings.slide_autoplay | json }},
+    "slide_count": {{ section.blocks.size | json }}
+  }
+</script>
+
+{%- capture section_classes -%}
+  home-section-height-{{ section.settings.section_height }}
+  home-section-background-{{ section.settings.background_color }}
+{%- endcapture -%}
+
+<section class="{{ section_classes | strip_newlines }}" data-home-section>
+  <div class="home-testimonials-wrapper testimonials-slide-{{ section.id }}" data-testimonials-slideshow>
+    {% for block in section.blocks %}
+      {% include 'testimonials-slide' %}
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+  .testimonials-slide-{{ section.id }} .flickity-page-dots .dot.is-paused:before {
+    animation: flickity-progress {{ section.settings.slide_autoplay }}s linear both;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "class": "home-testimonials",
+  "settings": [
+    {
+      "id": "section_height",
+      "type": "select",
+      "label": "Section height",
+      "default": "medium",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "id": "background_color",
+      "type": "select",
+      "label": "Background color",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "contrast",
+          "label": "Contrast"
+        }
+      ]
+    },
+    {
+      "id": "should_autoplay",
+      "type": "checkbox",
+      "label": "Autoplay",
+      "default": true
+    },
+    {
+      "id": "slide_autoplay",
+      "type": "range",
+      "label": "Autoplay duration",
+      "min": 5,
+      "max": 12,
+      "step": 1,
+      "unit": "sec",
+      "default": 8
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "id": "author",
+          "type": "text",
+          "label": "Author",
+          "default": "Source's Name"
+        },
+        {
+          "id": "body",
+          "type": "textarea",
+          "label": "Testimonial",
+          "default": "Showcase up to six testimonials to build trust with potential customers."
+        },
+        {
+          "id": "author_image",
+          "type": "image_picker",
+          "label": "Author image",
+          "info": "Optional, 60x60 recommended"
+        },
+        {
+          "id": "author_location",
+          "type": "text",
+          "label": "Author location"
+        }
+      ]
+    }
+  ],
+  "locales": {
+    "en": {
+      "testimonial_in": "in"
+    }
+  },
+  "max_blocks": 6,
+  "presets": [
+    {
+      "category": "Text",
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}

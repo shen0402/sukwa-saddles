@@ -1,0 +1,103 @@
+<!doctype html>
+<html class="no-js" lang="{{ shop.locale }}">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>
+    {%- if page_title -%}
+      {{- page_title -}}
+
+      {%- if current_tags -%}
+        {%- assign meta_tags = current_tags | join: ', ' %}
+        {{ 'general.title.tags' | t: tags: meta_tags -}}
+      {%- endif -%}
+
+      {%- if current_page != 1 -%}
+        {{- 'general.title.page' | t: page: current_page -}}
+      {%- endif -%}
+
+      {%- unless page_title contains shop.name -%}
+        {{- 'general.title.shop' | t: shop: shop.name -}}
+      {%- endunless -%}
+    {%- else -%}
+      {{- shop.name -}}
+    {%- endif -%}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}" />
+  {% endif %}
+  {% include 'favicon' %}
+
+  {% if template contains 'collection' and current_tags %}
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="{{ shop.url }}{{ collection.url }}" />
+  {% else %}
+    <link rel="canonical" href="{{ canonical_url }}" />
+  {% endif %}
+
+  <meta name="viewport" content="width=device-width" />
+
+  <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
+
+  {{ content_for_header }}
+
+  {% assign twitter_handle = settings.social_twitter_url | split: 'twitter.com/' | last %}
+  {%
+    include 'social-meta-tags',
+    twitter_handle: twitter_handle
+  %}
+
+  <!-- Theme CSS -->
+  {% if template == 'page.contact' %}
+  {{ 'webflow.css' | asset_url | stylesheet_tag }}
+  {% endif %}
+  {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+  <link type="text/css" rel="stylesheet" href="https://use.typekit.net/gsl3cam.css">
+  
+
+  <!-- Theme object -->
+  {% include 'theme-options' %}
+  <script>
+  (function(w, d, t, h, s, n) {
+    w.FlodeskObject = n;
+    var fn = function() {
+      (w[n].q = w[n].q || []).push(arguments);
+    };
+    w[n] = w[n] || fn;
+    var f = d.getElementsByTagName(t)[0];
+    var v = '?v=' + Math.floor(new Date().getTime() / (120 * 1000)) * 60;
+    var sm = d.createElement(t);
+    sm.async = true;
+    sm.type = 'module';
+    sm.src = h + s + '.mjs' + v;
+    f.parentNode.insertBefore(sm, f);
+    var sn = d.createElement(t);
+    sn.async = true;
+    sn.noModule = true;
+    sn.src = h + s + '.js' + v;
+    f.parentNode.insertBefore(sn, f);
+  })(window, document, 'script', 'https://assets.flodesk.com', '/universal', 'fd');
+</script>
+
+</head>
+
+<body class="{% include 'body-classes' %}">
+
+  {% include 'svg-sprite' %}
+  {% section 'header' %}
+
+  <div class="content-wrapper">
+    <div class="main-content">
+      {{ content_for_layout }}
+    </div>
+
+    <div class="content-overlay"></div>
+  </div>
+
+  {% include 'footer-scripts' %}
+</body>
+</html>

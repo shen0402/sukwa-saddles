@@ -1,0 +1,42 @@
+{% comment %}
+  @param item
+         The product to render.
+
+  @param collection
+         The collection to use to create the product link.
+{% endcomment %}
+
+<a class="related-product" href="{{ item.url | within: collection }}">
+  {% if item.available %}
+    {% if item.compare_at_price_min > item.price_min %}
+      <span class="product-badge product-badge-sale">{{ 'products.product.on_sale' | t }}</span>
+    {% endif %}
+  {% else %}
+    <span class="product-badge product-badge-unavailable">{{ 'products.product.sold_out' | t }}</span>
+  {% endif %}
+
+  {%
+    include 'rimg',
+    class: 'related-product-image'
+    img: item.featured_image,
+    size: '480x480',
+    lazy: true
+  %}
+
+  <h3 class="related-product-title">{{ item.title }}</h3>
+
+  <div class="related-product-price">
+    {% if item.available %}
+      {% if item.price_varies %}
+        <span class="price">
+          {% if item.price_varies %}{{ 'products.product.from' | t }}{% endif %}
+          <span data-money>{{ item.price_min | money }}</span>
+        </span>
+      {% else %}
+        {% if item.price_min %}
+          <span class="price" data-money>{{ item.price_min | money }}</span>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  </div>
+</a>

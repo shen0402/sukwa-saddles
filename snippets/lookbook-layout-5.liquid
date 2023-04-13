@@ -1,0 +1,21 @@
+<article class="lookbook-layout lookbook-layout-5 {{ row_color }}">
+  <div class="lookbook-slots">
+    <div class="lookbook-slot lookbook-slot-1">
+      {% include 'lookbook-image', image: product.images[0] %}
+
+      {% include 'lookbook-image', image: product.images[1] %}
+    </div>
+
+    <div class="lookbook-slot lookbook-slot-2">
+      {% include 'lookbook-image', image: product.images[2] %}
+
+      {% include 'lookbook-image', image: product.images[3] %}
+    </div>
+
+    <div class="lookbook-slot lookbook-slot-3">
+      {% include 'lookbook-image', image: product.images[4] %}
+
+      {% include 'lookbook-label', truncate_length: 60 %}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,157 @@
+{% assign blog = blogs[section.settings.blog] %}
+<section
+  class="home-blog-posts-section"
+  data-section-id="{{ section.id }}"
+  data-section-type="home-blog-posts"
+  data-home-section
+>
+  <div class="home-featured-blog">
+    <div class="home-featured-blog-header-container">
+      <h1 class="home-featured-blog-heading">
+        {{ section.settings.heading | escape }}
+      </h1>
+
+      {% if section.settings.view_all_show %}
+        <a class="home-featured-blog-view-all home-section-link" href="{{ blog.url }}">
+          {{ section.settings.view_all_text | escape }}
+          {%- include 'icon-arrow-right' -%}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="blog-posts" data-article-list>
+      <div class="article-item-grid-sizer"></div>
+      <div class="article-item-gutter-sizer"></div>
+      {% if section.settings.blog != 'none' and blog.articles.size > 0 %}
+        {% for article in blog.articles limit: section.settings.post_number %}
+          {% include 'article-list-item' %}
+        {% endfor %}
+      {% else %}
+        {% for i in (1..2) %}
+          <article class="article-item" data-article-item>
+            <a href="#" class="article-item-image-link">
+              <div class="home-featured-post-no-image">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            </a>
+            <div class="article-item-content-wrapper">
+              <div class="article-item-content">
+                <h1 class="article-item-title">
+                  <a href="#">
+                    {{ 'onboarding_blog_title' | t }}
+                  </a>
+                </h1>
+                <p class="article-item-body rte">
+                  {{ 'onboarding_blog_excerpt' | t }}
+                </p>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog posts",
+  "class": "home-blog-posts",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Journal"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "range",
+      "id": "post_number",
+      "label": "Number of posts",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all link text",
+      "default": "View all posts"
+    },
+    {
+      "id": "view_all_show",
+      "type": "checkbox",
+      "label": "Show view all link",
+      "default": true
+    },
+    {
+      "id": "show_date",
+      "type": "checkbox",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "id": "show_author",
+      "type": "checkbox",
+      "label": "Show post author",
+      "default": true
+    },
+    {
+      "id": "show_excerpt",
+      "type": "checkbox",
+      "label": "Show blog excerpt",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Post Images"
+    },
+    {
+      "id": "image_crop",
+      "type": "select",
+      "label": "Image crop",
+      "options": [
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "short",
+          "label": "Short"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "tall",
+          "label": "Tall"
+        }
+      ],
+      "default": "original"
+    }
+  ],
+  "locales": {
+    "en": {
+      "onboarding_blog_title": "Your post's title",
+      "onboarding_blog_excerpt": "Your store hasn’t published any blog posts yet. A blog can be used to talk about new product launches, tips, or other news you want to share with your customers. You can check out Shopify’s ecommerce blog for inspiration and advice for your own store and blog."
+    }
+  },
+  "presets": [
+    {
+      "category": "Blog",
+      "name": "Blog posts",
+      "settings": {
+        "blog": "none"
+      }
+    }
+  ]
+}
+
+{% endschema %}

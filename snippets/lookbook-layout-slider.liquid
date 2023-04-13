@@ -1,0 +1,19 @@
+<article class="lookbook-layout lookbook-layout-slider {{ row_color }}">
+  <div class="lookbook-slots">
+
+    <div class="lookbook-slider" data-lookbook-slider>
+      {% for image in product.images %}
+        <div class="lookbook-slide lookbook-slide-{{ forloop.index }}">
+          {%
+            include 'lookbook-image',
+            image: image,
+            hide_link: true,
+            size: '1140x500'
+          %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {% include 'lookbook-label', truncate_length: 60 %}
+  </div>
+</article>

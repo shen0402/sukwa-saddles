@@ -1,0 +1,21 @@
+<div class="page-404">
+  <h1 class="page-title">
+    {{ 'general.404.header' | t }}
+  </h1>
+
+  <div class="rte">
+    {% capture searchLink %}
+      <a href="/search">{{ 'general.404.search_link' | t }}</a>
+    {% endcapture %}
+    {% capture home-link %}
+      <a href="{{ shop.url }}">{{ 'general.404.home_link' | t }}</a>
+    {% endcapture %}
+    <p>{{ 'general.404.message_html' | t: search_link: searchLink, home_link: home-link }}</p>
+  </div>
+
+  {% assign collection = collections | first %}
+  {% include 'collection-item-block',
+    block_tag: 'div',
+    show_description: true
+  %}
+</div>

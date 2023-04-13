@@ -1,0 +1,38 @@
+<div class="lookbook-label">
+  <header class="lookbook-label-header">
+    <h1 class="lookbook-label-title">
+      <a
+        class="lookbook-label-link"
+        href="{{ product.url | within: collection }}">
+        {{ product.title }}
+      </a>
+    </h1>
+    {% if product.price > 0 %}
+      <p class="lookbook-label-price">
+        {% if product.price_varies %}{{ 'products.product.from' | t }}{% endif %}
+        <span data-money>{{ product.price_min | money }}</span>
+      </p>
+    {% endif %}
+  </header>
+
+  {% if product.description != blank %}
+    <div class="lookbook-label-description">
+      {% include 'truncate-words', truncate_text: product.description, truncate_length: truncate_length %}
+
+      <a
+        class="lookbook-label-readmore"
+        href="{{ product.url | within: collection }}">
+        {{ 'general.general.read_more' | t }}
+      </a>
+    </div>
+  {% endif %}
+
+  {% if settings.enable_tag_filtering and product.tags.size > 0 %}
+    <div class="lookbook-product-tags">
+      {{ 'lookbook.sorting.tags' | t }}
+      {% for tag in product.tags %}
+        {{ tag | link_to_tag: tag }}{% unless forloop.last %}, {% endunless %}
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>

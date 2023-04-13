@@ -1,0 +1,23 @@
+<script>
+  var Theme = {};
+
+  Theme.version = "4.1.1";
+
+  Theme.addToCartText = "{{ 'products.product.add_to_cart' | t | escape }}";
+  Theme.soldOutText = "{{ 'products.product.sold_out' | t | escape }}";
+  Theme.unavailableText = "{{'products.product.unavailable' | t | escape }}";
+  Theme.processingText = "{{ 'products.product.processing' | t | escape }}";
+  Theme.gridSpacing = "{{ settings.grid_spacing }}";
+
+  Theme.customerLoggedIn = {% if shop.customer_accounts_enabled and customer %}true{% else %}false{% endif %};
+
+  Theme.currency ={
+    "enable": {{ settings.enable_currency_switcher | default: false }},
+    "shopCurrency": {{ shop.currency | json }},
+    "defaultCurrency": {{ settings.currency_switcher_default | default: shop.currency | json }},
+    "displayFormat": {{ settings.currency_switcher_format | json }},
+    "moneyFormat": {{ shop[settings.currency_switcher_format] | default: shop.money_format | strip_html | json }},
+    "moneyFormatNoCurrency": {{ shop.money_format | strip_html | json }},
+    "moneyFormatCurrency": {{ shop.money_with_currency_format | strip_html | json }}
+  };
+</script>

@@ -1,0 +1,64 @@
+<div class="cart-footer">
+
+  <div class="cart-totals">
+    <div class="cart-subtotal">
+      <span class="visually-hidden">
+        {{ 'general.general.subtotal' | t }}
+      </span>
+
+      <span
+        class="cart-subtotal-price"
+        data-money
+        data-cart-subtotal>
+        {{ cart.total_price | money }}
+      </span>
+    </div>
+
+    <button
+      type="submit"
+      name="checkout"
+      value="{{ 'cart.general.submit' | t }}"
+      class="button"
+    >
+      {% if section.settings.enable_checkout_lock_icon %}
+        {% include 'icon-checkout-lock' %}
+      {% endif %}
+      <span>{{ 'cart.general.submit' | t }}</span>
+    </button>
+
+    <p class="cart-submit-note">{{ 'cart.general.tax_and_shipping' | t }}</p>
+
+    {% if additional_checkout_buttons %}
+      <div class="cart-additional-checkout-buttons">
+        {{ content_for_additional_checkout_buttons }}
+      </div>
+    {% endif %}
+  </div>
+
+  {% if section.settings.show_shipping_calculator and cart.requires_shipping %}
+    {% assign show_shipping = true %}
+  {% endif %}
+
+  {% if section.settings.enable_cart_notes or show_shipping %}
+    <div class="cart-footer-extras">
+      {% if section.settings.enable_cart_notes %}
+        <div class="cart-notes">
+          <label class="input-label input-label-hidden" for="cart-note-input">{{ 'cart.general.note' | t }}</label>
+          <textarea
+            class="cart-note input-field"
+            name="note"
+            id="cart-note-input"
+            rows="1"
+            placeholder="{{ 'cart.general.note' | t }}"
+            data-cart-notes
+            aria-label="{{ 'cart.general.note' | t }}">{{ cart.note }}</textarea>
+        </div>
+      {% endif %}
+
+      {% if show_shipping %}
+        {% include 'cart-shipping' %}
+      {% endif %}
+    </div>
+  {% endif %}
+
+</div>

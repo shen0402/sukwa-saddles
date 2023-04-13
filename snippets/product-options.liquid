@@ -1,0 +1,73 @@
+{% assign has_variants = false %}
+{% if product.available and product.has_only_default_variant == false %}
+  {% assign has_variants = true %}
+{% endif %}
+
+{% assign selected_variant_outofstock = false %}
+{% if product.selected_or_first_available_variant.available == false %}
+  {% assign selected_variant_outofstock = true %}
+{% endif %}
+<div
+  class="
+    product-form
+    {% if has_variants %}product-form-has-variants{% endif %}
+    {% if selected_variant_outofstock %}product-form-selected-variant-outofstock{% endif %}
+  "
+>
+  {% form 'product', product %}
+
+    <div class="product-options">
+      <select
+        name="id"
+        class="product-variants"
+        data-product-variants
+        data-product="{{ product | json | escape }}">
+
+        {% for variant in product.variants %}
+          <option
+            {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+            value="{{ variant.id }}">
+            {{ variant.title }} - {{ variant.price | money }}
+          </option>
+        {% endfor %}
+      </select>
+
+      {% if has_variants %}
+        {% for option in product.options %}
+          {% include 'product-option', current_option: option, selected_variant: variant %}
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <a
+      href="#"
+      data-product-extended-open
+      class="button product-add product-add-select">
+      {{ 'products.product.select_options' | t }}
+    </a>
+
+    <div class="product-add">
+      <input
+        type="submit"
+        class="button product-add-available"
+        value="{{ 'products.product.add_to_cart' | t }}"/>
+
+      <input
+        type="submit"
+        class="button product-add-soldout"
+        disabled
+        value="{{ 'products.product.sold_out' | t }}"/>
+
+      <input
+        type="button"
+        class="button product-add-unavailable"
+        disabled
+        value="{{ 'products.product.unavailable' | t }}"/>
+
+      {% if section.settings.show_spb %}
+        {{ form | payment_button }}
+      {% endif %}
+    </div>
+
+  {% endform %}
+</div>

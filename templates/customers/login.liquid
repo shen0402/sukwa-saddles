@@ -1,0 +1,121 @@
+<div class="page-content account-page">
+
+  <h1 class="page-title">{{ 'customers.login.header' | t }}</h1>
+
+  <article class="account-login-form" data-login-form>
+
+    {% form 'recover_customer_password' %}
+
+      {% if form.posted_successfully? %}
+        <p class="successful-reset">{{ 'customers.login.message' | t }}</p>
+      {% endif %}
+
+      <div class="recover-password">
+
+        <p>{{ 'customers.login.recover_password_message' | t }}</p>
+
+        <div class="input-wrapper">
+          <label for="login-reset" class="visually-hidden">
+            {{ 'general.general.email' | t }}
+          </label>
+          <input
+            id="login-reset"
+            class="input-field {% if form.errors %}error{% endif %}"
+            type="text"
+            placeholder="{{ 'general.general.email' | t }}"
+            value="{{ form.email }}"
+            name="email">
+
+          {% if form.errors %}
+            <p class="error-message">{{ form.errors.messages['form'] }}</p>
+          {% endif %}
+        </div>
+
+        <div class="input-wrapper">
+          <input
+            class="button"
+            type="submit"
+            value="{{ 'customers.reset_password.submit' | t }}">
+        </div>
+
+        <p>
+          <a
+            class="toggle-forgetfulness"
+            href="#"
+            data-toggle-passwordform>
+            {{ 'general.general.cancel' | t }}
+          </a>
+        </p>
+
+      </div>
+    {% endform %}
+
+    <div class="customer-login">
+      {% form 'customer_login' %}
+
+        {% if form.errors %}
+          <p class="error-message banner">{{ 'customers.login.error' | t }}</p>
+        {% endif %}
+
+        <div class="input-wrapper">
+          <label for="login-email"
+            class="visually-hidden" >
+            {{ 'general.general.email' | t }}
+          </label>
+          <input
+            id="login-email"
+            class="input-field"
+            type="text"
+            placeholder="{{ 'general.general.email' | t }}"
+            value="{{ form.email }}"
+            name="customer[email]">
+        </div>
+
+        <div class="input-wrapper">
+          <label for="login-password"
+            class="visually-hidden">{{ 'general.general.password' | t }}</label>
+          <input
+            id="login-password"
+            class="input-field"
+            placeholder="{{ 'general.general.password' | t }}"
+            type="password"
+            name="customer[password]">
+        </div>
+
+        <div class="input-wrapper">
+          <input
+            class="button"
+            type="submit"
+            value="{{ 'customers.login.submit' | t }}">
+        </div>
+
+        <p>
+          <a
+            class="toggle-forgetfulness"
+            href="#"
+            data-toggle-passwordform>
+            {{ 'customers.login.forgot_your_password' | t }}
+          </a>
+        </p>
+
+      {% endform %}
+    </div>
+
+  </article>
+
+  {% if shop.checkout.guest_login %}
+    <div class="guest-checkout">
+      <h2 class="account-subtitle">{{ 'customers.guest_checkout.header' | t }}</h2>
+      {% form 'guest_login' %}
+        <p>{{ 'customers.guest_checkout.header' | t }}</p>
+        <input class="input-field" type="submit" value="{{ 'customers.guest_checkout.submit' | t }}" />
+      {% endform %}
+    </div>
+  {% else %}
+    <div class="new-customer">
+      <h2 class="account-subtitle">{{ 'customers.new_customer.header' | t }}</h2>
+      <p>{{ 'customers.new_customer.message' | t }}</p>
+      <a class="button" href="/account/register">{{ 'customers.register.submit' | t }}</a>
+    </div>
+  {% endif %}
+</div>

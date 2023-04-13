@@ -1,0 +1,31 @@
+{%- capture social_media_links -%}
+  {% assign social_media_accounts = "facebook|twitter|google|pinterest|instagram|vimeo|youtube|email|rss" | split: "|" %}
+  {%- for account in social_media_accounts -%}
+    {% capture account_setting %}social_{{ account }}_{% unless account == 'email' %}url{% else %}address{% endunless %}{% endcapture %}
+    {% assign url = settings[account_setting] | escape %}
+
+    {%- if url != blank -%}
+      <li class="navigation-social-item">
+        <a
+          class="navigation-social-item-link"
+          href="{% if account == 'email' %}mailto:{% endif %}{{ url }}"
+          title="{% unless account == 'google' %}{{ account | capitalize }}{% else %}{{ account | capitalize | append: '+' }}{% endunless %}"
+          {% unless account == 'email' %}target="_blank"{% endunless %}>
+          <svg role="img" class="navigation-social-item-icon">
+            <use xlink:href="#icon-social-{{ account }}"></use>
+          </svg>
+        </a>
+      </li>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{% assign social_media_links = social_media_links | strip_newlines %}
+
+{% if social_media_links != blank %}
+  <div class="main-navigation-social-links">
+    <ul>
+      {{ social_media_links }}
+    </ul>
+  </div>
+{% endif %}

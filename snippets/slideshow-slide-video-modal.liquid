@@ -1,0 +1,51 @@
+<div id="modal-{{ video_id }}-{{ section.id }}" class="slideshow-video-modal">
+  <div class="slideshow-video-modal-content">
+    <a
+      class="slideshow-video-modal-close"
+      href="#"
+      data-slideshow-video-modal-close
+    >
+      {% include 'icon-close' %}
+    </a>
+
+    <div class="slideshow-video-modal-wrapper">
+      {% if block.settings.button_link contains 'youtube' %}
+        <iframe
+          id="video-modal-{{ video_id }}-{{ section.id }}"
+          src="{{ block.settings.button_link | replace: 'https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/' }}?rel=0&showinfo=0&vq=720&enablejsapi=1"
+          width="850"
+          height="480"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      {% endif %}
+
+      {% if block.settings.button_link contains 'vimeo' %}
+        <iframe
+          src="{{ block.settings.button_link | replace: 'https://vimeo.com/', 'https://player.vimeo.com/video/' }}?byline=0&portrait=0&badge=0"
+          width="850"
+          height="480"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% comment %}
+  Slideshow video modal unique styles
+{% endcomment %}
+<style>
+  .slideshow-video-{{ section.id }}-modal-visible #shopify-section-{{ section.id }} .slideshow-video-{{ section.id }}-modal {
+    display: block;
+    z-index: 99;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .slideshow-video-{{ section.id }}-modal-visible #shopify-section-{{ section.id }} .slideshow-video-{{ section.id }}-modal .modal-inner {
+    z-index: 100;
+    opacity: 1;
+  }
+</style>

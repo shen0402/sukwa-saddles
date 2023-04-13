@@ -1,0 +1,16 @@
+{% assign class_name = 'lookbook-layout-1' %}
+{% if is_alt %}
+  {% capture class_name %}{{ class_name }} lookbook-layout-1-alt{% endcapture %}
+{% endif %}
+
+<article class="lookbook-layout {{ class_name }} {{ row_color }}">
+  <div class="lookbook-slots">
+    <div class="lookbook-slot lookbook-slot-1">
+      {% include 'lookbook-image', image: product.featured_image %}
+    </div>
+
+    <div class="lookbook-slot lookbook-slot-2">
+      {% include 'lookbook-label', truncate_length: 10 %}
+    </div>
+  </div>
+</article>

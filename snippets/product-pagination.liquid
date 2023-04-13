@@ -1,0 +1,37 @@
+<div class="product-pagination jc-product-pagination">
+  {%- capture collection_length_html -%}
+    <span
+      class="product-pagination-number"
+      data-product-pagination="{% if collection.products_count %}{{ collection.products_count }}{% endif %}"
+      data-product-collection-length></span>
+  {%- endcapture -%}
+
+  {%- capture product_index_html -%}
+    <span
+      class="product-pagination-number"
+      data-product-pagination="{% if product_index %}{{ product_index }}{% endif %}"
+      data-product-index></span>
+  {%- endcapture -%}
+
+  {{ "general.pagination.product_pagination_html" | t: current_page: product_index_html, total_pages: collection_length_html }}
+
+  <span class="product-pagination-name jc-product-pagination-name">{{ product.title }}</span>
+
+  {% if product.featured_image %}
+    {%
+      include 'rimg',
+      class: 'product-pagination-image'
+      img: product.featured_image,
+      size: '150x150',
+      lazy: true
+    %}
+  {% else %}
+    <img
+      class="product-pagination-image"
+      src="{{ 'no-image.svg' | asset_url }}">
+  {% endif %}
+
+  <div class="product-pagination-arrow">
+    {%- include 'icon-arrow-down' -%}
+  </div>
+</div>

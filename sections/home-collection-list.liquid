@@ -1,0 +1,139 @@
+<div
+  class="
+    home-collections-list
+    home-collections-list-layout-{{ section.settings.layout }}
+  "
+>
+  {% if section.settings.heading != blank %}
+    <div class="home-collections-list-header"
+      style="background: {{ section.settings.header_background }};"
+    >
+      <h2 class="home-collections-list-title">{{ section.settings.heading | escape }}</h2>
+    </div>
+  {% endif %}
+
+  <div class="home-collections-list-items">
+    {% for block in section.blocks %}
+      {% assign collection = collections[block.settings.collection] %}
+      {% assign collection_cta_url = collection.url %}
+      {% assign onboarding = false %}
+      {% assign first_product = true %}
+
+      {% if collection == blank %}
+        {% assign onboarding = true %}
+        {% assign collection_cta_url = '#' %}
+      {% endif %}
+
+      {% assign media_tag = 'a href="' | append: collection_cta_url | append: '"' %}
+      {%
+        include 'collection-item-block',
+        show_description: section.settings.show_description,
+        collection: collection
+        block_attributes: block.shopify_attributes,
+        first_product: first_product,
+        onboarding: onboarding,
+        link_collection: false,
+        collection_cta_url: collection_cta_url,
+        title_tag: 'h2',
+        media_tag: media_tag,
+        title_link: collection_cta_url
+      %}
+    {% else %}
+      {% for i in (1..4) %}
+        {%
+          include 'collection-item-block',
+          show_description: section.settings.show_description
+          first_product: false,
+          onboarding: true,
+          link_collection: false,
+          collection_cta_url: '#',
+          title_tag: 'h2',
+          media_tag: 'a href="#"',
+          title_link: '#'
+        %}
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection list",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "id": "heading",
+      "type": "text",
+      "label": "Heading",
+      "default": "Featured collections"
+    },
+    {
+      "type": "color",
+      "id": "header_background",
+      "label": "Header color",
+      "default": "#eed4cb"
+    },
+    {
+      "id": "layout",
+      "type": "select",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "one-column",
+          "label": "1 Column"
+        },
+        {
+          "value": "two-column",
+          "label": "2 Columns"
+        }
+      ],
+      "default": "two-column"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "locales": {
+    "en": {
+      "shop_collection": "Shop collection"
+    }
+  },
+  "presets": [
+    {
+      "category": "Collection",
+      "name": "Collection list",
+      "blocks": [
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}

@@ -1,0 +1,53 @@
+{% comment %}
+  @param current_option
+         The current product option we want to render.
+
+  @param selected_variant
+         The currently selected variant. Used to set the `checked` attribute
+         on the appropriate inputs.
+{% endcomment %}
+
+{% assign found_option = false %}
+{% assign option_index = 0 %}
+
+{% for option in product.options %}
+  {% if option == current_option %}
+    {% assign found_option = true %}
+    {% assign option_index = forloop.index0 %}
+  {% endif %}
+{% endfor %}
+
+{% if found_option %}
+  <div class="option">
+    <div class="option-title">{{ current_option }}</div>
+
+    {% assign values = '' %}
+
+    {% for variant in product.variants %}
+      {% assign value = variant.options[option_index] %}
+
+      {% unless values contains value %}
+        {% assign values = values | join: ',' %}
+        {% assign values = values | append: ',' | append: value %}
+        {% assign values = values | split: ',' %}
+
+        <label
+          data-value="{{ value | escape }}"
+          class="option-label {% if variant.available %}option-available{% else %}option-soldout{% endif %}">
+
+          <input
+            data-option-input
+            data-option-index="{{ option_index | plus: 1 }}"
+            class="option-input"
+            type="radio"
+            name="option-{{ option_index }}"
+            value="{{ value | escape }}"
+            {% if selected_variant.options[option_index] == value %}checked{% endif %}
+          />
+
+          <span class="option-item">{{ value }}</span>
+        </label>
+      {% endunless %}
+    {% endfor %}
+  </div>
+{% endif %}

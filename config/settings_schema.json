@@ -1,0 +1,445 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Vogue",
+    "theme_author": "Pixel Union",
+    "theme_version": "4.2.8",
+    "theme_documentation_url": "http:\/\/support.pixelunion.net\/category\/243-vogue\/",
+    "theme_support_email": "support@pixelunion.net"
+  },
+  {
+    "name": "Color",
+    "settings": [
+      {
+        "type": "header",
+        "content": "General"
+      },
+      {
+        "type": "color",
+        "id": "body_text_color",
+        "label": "Text"
+      },
+      {
+        "type": "color",
+        "id": "accent_color",
+        "label": "Accent"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background"
+      },
+      {
+        "type": "color",
+        "id": "button_color",
+        "label": "Button text"
+      },
+      {
+        "type": "color",
+        "id": "button_background_color",
+        "label": "Button background"
+      },
+      {
+        "type": "header",
+        "content": "Sidebar and alternate header"
+      },
+      {
+        "type": "color",
+        "id": "sidebar_background_color",
+        "label": "Background"
+      },
+      {
+        "type": "header",
+        "content": "Product listings"
+      },
+      {
+        "type": "color",
+        "id": "listing_text_color",
+        "label": "Text",
+        "info": "Text color when shown over a product image."
+      },
+      {
+        "type": "color",
+        "id": "listing_text_background_color",
+        "label": "Background"
+      },
+      {
+        "type": "range",
+        "id": "listing_text_background_alpha",
+        "label": "Background opacity",
+        "min": 0,
+        "max": 100,
+        "step": 10,
+        "default": 90,
+        "unit": "%"
+      },
+      {
+        "type": "header",
+        "content": "Collection colors"
+      },
+      {
+        "type": "paragraph",
+        "content": "The settings below allow you to assign a specific color to each of your collections. You’ll notice these colors wherever a collection is featured, as well as on the collections list page."
+      },
+      {
+        "type": "color",
+        "id": "collection_color_default",
+        "label": "Default collection color",
+        "info": "This color will be used if no color has been set to a collection"
+      },
+      {
+        "type": "header",
+        "content": "Collection 1"
+      },
+      {
+        "type": "collection",
+        "id": "collection_1",
+        "label": "Collection"
+      },
+      {
+        "type": "color",
+        "id": "collection_1_color",
+        "label": "Color"
+      },
+      {
+        "type": "header",
+        "content": "Collection 2"
+      },
+      {
+        "type": "collection",
+        "id": "collection_2",
+        "label": "Collection"
+      },
+      {
+        "type": "color",
+        "id": "collection_2_color",
+        "label": "Color"
+      },
+      {
+        "type": "header",
+        "content": "Collection 3"
+      },
+      {
+        "type": "collection",
+        "id": "collection_3",
+        "label": "Collection"
+      },
+      {
+        "type": "color",
+        "id": "collection_3_color",
+        "label": "Color"
+      },
+      {
+        "type": "header",
+        "content": "Collection 4"
+      },
+      {
+        "type": "collection",
+        "id": "collection_4",
+        "label": "Collection"
+      },
+      {
+        "type": "color",
+        "id": "collection_4_color",
+        "label": "Color"
+      },
+      {
+        "type": "header",
+        "content": "Collection 5"
+      },
+      {
+        "type": "collection",
+        "id": "collection_5",
+        "label": "Collection"
+      },
+      {
+        "type": "color",
+        "id": "collection_5_color",
+        "label": "Color"
+      },
+      {
+        "type": "header",
+        "content": "Collection 6"
+      },
+      {
+        "type": "collection",
+        "id": "collection_6",
+        "label": "Collection"
+      },
+      {
+        "type": "color",
+        "id": "collection_6_color",
+        "label": "Color"
+      },
+      {
+        "type": "header",
+        "content": "Collection 7"
+      },
+      {
+        "type": "collection",
+        "id": "collection_7",
+        "label": "Collection"
+      },
+      {
+        "type": "color",
+        "id": "collection_7_color",
+        "label": "Color"
+      },
+      {
+        "type": "header",
+        "content": "Collection 8"
+      },
+      {
+        "type": "collection",
+        "id": "collection_8",
+        "label": "Collection"
+      },
+      {
+        "type": "color",
+        "id": "collection_8_color",
+        "label": "Color"
+      },
+      {
+        "type": "header",
+        "content": "Collection 9"
+      },
+      {
+        "type": "collection",
+        "id": "collection_9",
+        "label": "Collection"
+      },
+      {
+        "type": "color",
+        "id": "collection_9_color",
+        "label": "Color"
+      },
+      {
+        "type": "header",
+        "content": "Collection 10"
+      },
+      {
+        "type": "collection",
+        "id": "collection_10",
+        "label": "Collection"
+      },
+      {
+        "type": "color",
+        "id": "collection_10_color",
+        "label": "Color"
+      },
+      {
+        "type": "header",
+        "content": "Collection 11"
+      },
+      {
+        "type": "collection",
+        "id": "collection_11",
+        "label": "Collection"
+      },
+      {
+        "type": "color",
+        "id": "collection_11_color",
+        "label": "Color"
+      },
+      {
+        "type": "header",
+        "content": "Collection 12"
+      },
+      {
+        "type": "collection",
+        "id": "collection_12",
+        "label": "Collection"
+      },
+      {
+        "type": "color",
+        "id": "collection_12_color",
+        "label": "Color"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_headings",
+        "label": "Font",
+        "default": "helvetica_n4"
+      },
+      {
+        "type": "header",
+        "content": "Body text"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Font",
+        "default": "helvetica_n4"
+      },
+      {
+        "type": "header",
+        "content": "Testimonials and tweets"
+      },
+      {
+        "type": "select",
+        "id": "font_testimonials_tweets",
+        "label": "Font",
+        "options": [
+          {
+            "value": "font_headings",
+            "label": "Headings font"
+          },
+          {
+            "value": "font_body",
+            "label": "Body font"
+          }
+        ],
+        "default": "font_headings"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "select",
+        "id": "grid_spacing",
+        "label": "Grid spacing",
+        "options": [
+          {
+            "label": "None",
+            "value": "0px"
+          },
+          {
+            "label": "Small",
+            "value": "2px"
+          },
+          {
+            "label": "Large",
+            "value": "10px"
+          }
+        ],
+        "default": "0px"
+      }
+    ]
+  },
+  {
+    "name": "Currency",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_currency_switcher",
+        "label": "Enable currency conversion",
+        "default": true,
+        "info": "Even though prices are displayed in different currencies, orders will still be processed in your store's currency."
+      },
+      {
+        "type": "select",
+        "id": "currency_switcher_format",
+        "label": "Format",
+        "options": [
+          {
+            "value": "money_format",
+            "label": "Without currency ($10.00)"
+          },
+          {
+            "value": "money_with_currency_format",
+            "label": "With currency ($10.00 CAD)"
+          }
+        ],
+        "default": "money_with_currency_format"
+      },
+      {
+        "type": "text",
+        "id": "currency_switcher_supported_currencies",
+        "label": "Supported currencies",
+        "default": "INR GBP CAD USD AUD EUR JPY",
+        "info": "Use the country's ISO [currency code](http:\/\/www.xe.com\/iso4217.php). Separate your currency codes with a space."
+      },
+      {
+        "type": "text",
+        "id": "currency_switcher_default",
+        "label": "Default currency",
+        "default": "USD"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "social_default_image",
+        "label": "Default social sharing image",
+        "info": "The image shown when sharing a link if a page-specific image isn't available"
+      },
+      {
+        "type": "header",
+        "content": "Accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_url",
+        "label": "Facebook",
+        "info": "https:\/\/facebook.com\/pixelunion"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_url",
+        "label": "Twitter",
+        "info": "https:\/\/twitter.com\/pixelunion"
+      },
+      {
+        "type": "text",
+        "id": "social_google_url",
+        "label": "Google+",
+        "info": "https:\/\/plus.google.com\/+shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_url",
+        "label": "Pinterest",
+        "info": "https:\/\/pinterest.com\/pixelunion"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_url",
+        "label": "Instagram",
+        "info": "https:\/\/instagram.com\/pixelunion"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_url",
+        "label": "Vimeo",
+        "info": "https:\/\/vimeo.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_url",
+        "label": "YouTube",
+        "info": "https:\/\/www.youtube.com\/user\/PixelUnionThemes"
+      },
+      {
+        "type": "text",
+        "id": "social_email_address",
+        "label": "Email address",
+        "info": "info@example.com"
+      }
+    ]
+  }
+]

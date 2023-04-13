@@ -1,0 +1,228 @@
+{% if section.settings.navigation_style == 'sidebar_stays' %}
+  {% assign has_sidebar = true %}
+{% else %}
+  {% assign has_sidebar = false %}
+{% endif %}
+
+{% if template contains 'gift_card' or template contains 'password' %}
+  {% assign has_sidebar = false %}
+  {% assign hide_nav = true %}
+{% endif %}
+
+{% assign enable_announcement = section.settings.show_announcement %}
+{% assign homepage_only = section.settings.homepage_announcement %}
+{% assign show_announcement = false %}
+
+{% if enable_announcement and homepage_only == false %}
+  {% assign show_announcement = true %}
+{% endif %}
+
+{% if enable_announcement and homepage_only and template.name == 'index' %}
+  {% assign show_announcement = true %}
+{% endif %}
+
+{% if section.settings.announcement_text == blank %}
+  {% assign show_announcement = false %}
+{% endif %}
+
+{% if has_sidebar %}
+  <script>
+    document.body.className += ' sidebar-always-visible';
+    if (window.Theme) Theme.hasSidebar = true;
+  </script>
+{% else %}
+  <script>
+    document.body.className += ' sidebar-always-hidden';
+    if (window.Theme) Theme.hasSidebar = false;
+  </script>
+{% endif %}
+
+{% if show_announcement %}
+  <script>
+    document.body.className += ' has-announcement-bar';
+  </script>
+{% endif %}
+
+{% capture primary_menu %}{{ section.settings['sidebar_menu_1'] }}{% endcapture %}
+{% capture secondary_menu %}{{ section.settings['sidebar_menu_2'] }}{% endcapture %}
+
+<div
+  data-header-sidebar="{{ has_sidebar }}"
+  data-header-announcement="{{ show_announcement }}"
+>
+
+  {% if has_sidebar %}
+    {% if template contains 'product' %}
+      {% assign sidebar_class = 'product-main-sidebar' %}
+    {% else %}
+      {% assign sidebar_class = 'main-sidebar' %}
+    {% endif %}
+
+    <div class="{{ sidebar_class }}" role="banner">
+      <header class="main-sidebar-header" data-main-sidebar-header>
+        <div class="main-sidebar-logo">
+          {% include 'header-logo', logo: section.settings.logo %}
+        </div>
+
+        <div class="main-sidebar-tools">
+          <ul class="main-sidebar-tool-list">
+            <li class="main-sidebar-tool-item main-sidebar-tool-item-menu">
+              <a
+                href="#"
+                data-overnav-open
+                aria-controls="overnav"
+                aria-expanded="false"
+              >
+                {{ 'layout.navigation.menu' | t }}
+              </a>
+            </li>
+
+            <li class="main-sidebar-tool-item main-sidebar-tool-item-cart">
+              <a href="/cart">{% include 'cart-count' %}</a>
+            </li>
+          </ul>
+        </div>
+      </header>
+
+      {%
+        include 'main-navigation',
+        enable_payment_icons: section.settings.enable_payment_icons,
+        social_settings: section.settings
+      %}
+    </div>
+  {% endif %}
+
+  {%
+    include 'header',
+    logo: section.settings.logo,
+    hide_nav: hide_nav
+  %}
+
+  <div class="overnav" data-overnav id="overnav">
+    <header class="main-sidebar-header" data-main-sidebar-header>
+      <div class="main-sidebar-tools">
+        <ul class="main-sidebar-tool-list">
+          <li class="main-sidebar-tool-item main-sidebar-navigation-toggle">
+            <a
+              href="#"
+              data-overnav-close
+              aria-controls="overnav"
+              aria-expanded="false"
+            >
+              {{ 'general.general.close' | t }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    {%
+      include 'main-navigation',
+      enable_payment_icons: section.settings.enable_payment_icons
+    %}
+  </div>
+
+  <div class="overnav-overlay" data-overnav-overlay></div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image",
+      "info": "240 x 50px .png recommended"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "sidebar_menu_1",
+      "label": "Main menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "sidebar_menu_2",
+      "label": "Secondary menu",
+      "info": "This menu won't show dropdown items.",
+      "default": "footer"
+    },
+    {
+      "type": "select",
+      "id": "navigation_style",
+      "label": "Navigation style",
+      "options": [
+        {
+          "label": "Compact header",
+          "value": "sidebar_hides"
+        },
+        {
+          "label": "Fixed sidebar",
+          "value": "sidebar_stays"
+        }
+      ],
+      "default": "sidebar_hides",
+      "info": "Compact header is automatically used on mobile."
+    },
+    {
+      "type": "header",
+      "content": "Payment icons"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_payment_icons",
+      "label": "Show payment icons"
+    },
+    {
+      "type": "header",
+      "content": "Announcement bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show announcement"
+    },
+    {
+      "type": "checkbox",
+      "id": "homepage_announcement",
+      "label": "Show on home page only"
+    },
+    {
+      "type": "textarea",
+      "id": "announcement_text",
+      "label": "Text",
+      "default": "Use this banner to promote free shipping or another special offer!"
+    },
+    {
+      "id": "announcement_text_mobile",
+      "type": "textarea",
+      "label": "Text (mobile)",
+      "info": "Use this option if you want to display alternate text in mobile. Recommended for shortening announcement text to make suitable for mobile."
+    },
+    {
+      "type": "url",
+      "id": "announcement_link",
+      "label": "Link"
+    },
+    {
+      "type": "color",
+      "id": "announcement_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "announcement_background",
+      "label": "Bar color",
+      "default": "#e98e6c"
+    }
+  ]
+}
+
+{% endschema %}

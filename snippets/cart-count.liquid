@@ -1,0 +1,6 @@
+{%- capture cart_item_count -%}
+  (<span class="main-sidebar-cart-count" data-cart-count>{{ cart.item_count }}</span>)
+{%- endcapture -%}
+{%- assign cart_html_text = 'layout.navigation.cart_html' | t: number_of_items: cart_item_count | strip -%}
+
+{{ cart_html_text }}

@@ -1,0 +1,297 @@
+<section
+  class="home-image-overlay-section"
+  data-section-id="{{ section.id }}"
+  data-section-type="home-image-overlay"
+  data-home-section
+>
+  <div
+    class="
+      home-image-overlay
+      home-image-overlay-desktop-{{ section.settings.desktop }}
+      home-image-overlay-mobile-{{ section.settings.mobile }}
+      home-image-crop-{{ section.settings.image_position }}
+      {% if section.settings.image == blank %}
+        home-image-overlay-no-image
+        home-image-placeholder
+      {% endif %}
+    "
+    {% if section.settings.image %}
+      {% assign crop = section.settings.image_position | split: '-' | last %}
+      {%
+        include 'rimg',
+        img: section.settings.image,
+        size: '2048x',
+        crop: crop,
+        lazy: true,
+        background: true
+      %}
+    {% endif %}
+  >
+    <div
+      class="
+        home-section-height-{{ section.settings.section_height }}
+        {% if section.settings.show_overlay != blank %}
+          overlay-{{ section.settings.style }}
+          overlay-opacity-{{ section.settings.opacity }}
+        {% endif %}
+      "
+    >
+      {% if section.settings.image %}
+        {%
+          include 'rimg',
+          img: section.settings.image,
+          size: image_size,
+          class: 'home-image-text-overlay-image',
+          lazy: true
+        %}
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'home-image-text-overlay-placeholder placeholder-svg' }}
+      {% endif %}
+      <div
+        class="
+          home-image-overlay-content
+          home-image-overlay-content-justification-{{ section.settings.text_justification }}
+          home-image-overlay-content-position-{{ section.settings.text_content_position }}
+        "
+      >
+        {% if section.settings.heading != blank %}
+          <h1
+            class="
+              home-image-overlay-heading
+              home-image-overlay-heading-size-{{ section.settings.heading_size }}
+            "
+          >
+            {{ section.settings.heading | escape }}
+          </h1>
+        {% endif %}
+
+        {% if section.settings.text != blank %}
+          <article class="home-image-overlay-text rte">
+            {{ section.settings.text }}
+          </article>
+        {% endif %}
+
+        {% if section.settings.button_link != blank and section.settings.button_label != blank %}
+          <a
+            class="home-image-overlay-text-button button"
+            href="{{ section.settings.button_link }}"
+          >
+            {{ section.settings.button_label | escape }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image with text overlay",
+  "class": "home-image-overlay",
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_height",
+      "label": "Section height",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "fullscreen",
+          "label": "Fullscreen"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "id": "image",
+      "type": "image_picker",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "default": "center-center",
+      "options": [
+        {
+          "label": "Top left",
+          "value": "top-left"
+        },
+        {
+          "label": "Top center",
+          "value": "top-center"
+        },
+        {
+          "label": "Top right",
+          "value": "top-right"
+        },
+        {
+          "label": "Center left",
+          "value": "center-left"
+        },
+        {
+          "label": "Center",
+          "value": "center-center"
+        },
+        {
+          "label": "Center right",
+          "value": "center-right"
+        },
+        {
+          "label": "Bottom left",
+          "value": "bottom-left"
+        },
+        {
+          "label": "Bottom center",
+          "value": "bottom-center"
+        },
+        {
+          "label": "Bottom right",
+          "value": "bottom-right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_justification",
+      "label": "Text alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_content_position",
+      "label": "Text content position",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "default": "medium",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop the dress"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show overlay",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Style",
+      "default": "accent",
+      "options": [
+        {
+          "value": "light",
+          "label": "Light text on dark overlay"
+        },
+        {
+          "value": "dark",
+          "label": "Dark text on light overlay"
+        },
+        {
+          "value": "accent",
+          "label": "Accent"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "opacity",
+      "label": "Opacity",
+      "min": 10,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    }
+  ],
+  "presets": [
+    {
+      "category": "Image",
+      "name": "Image with text overlay"
+    }
+  ]
+}
+
+{% endschema %}

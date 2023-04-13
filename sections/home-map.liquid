@@ -1,0 +1,247 @@
+<script
+  type="application/json"
+  data-section-type="home-map"
+  data-section-id="{{ section.id }}"
+>
+</script>
+{% assign background_style = blank %}
+
+{% assign map_color_bg = section.settings.map_bg_color %}
+{% assign map_color_fg = section.settings.map_fg_color %}
+
+{% assign map_color_a = map_color_fg %}
+{% assign map_color_b = map_color_bg | color_mix: map_color_fg, 30 %}
+{% assign map_color_c = map_color_bg | color_mix: map_color_fg, 50 %}
+{% assign map_color_d = map_color_bg | color_mix: map_color_fg, 70 %}
+{% assign map_color_e = map_color_bg | color_mix: '#ffffff', 98 %}
+{% assign map_color_f = map_color_bg | color_mix: '#000000', 50 %}
+
+{% assign map_image_crop = section.settings.map_image_position | split: '-' | last %}
+
+{% if section.settings.map_image %}
+  {%- capture background_style -%}
+    {%
+      include 'rimg',
+      img: section.settings.map_image,
+      size: '2048x',
+      crop: map_image_crop
+      lazy: true,
+      background: true
+    %}
+  {%- endcapture -%}
+{% elsif section.settings.map_api_key == blank %}
+  {%- capture placeholder_uri -%}
+    {%-
+      include 'placeholder_svg_uri',
+      placeholder: 'lifestyle-1'
+    -%}
+  {%- endcapture -%}
+
+  {%- capture background_style -%}
+    style="background-image: url('{{ placeholder_uri }}');"
+  {%- endcapture -%}
+{% endif %}
+
+<div class="map-wrapper">
+  <div
+    class="
+      map
+      home-image-crop-{{ section.settings.map_image_position }}
+      home-section-height-{{ section.settings.map_height }}
+      {% if section.settings.map_image %}
+        map-has-image
+      {% elsif section.settings.map_api_key == blank %}
+        map-placeholder
+      {% endif %}
+    "
+    data-map
+    data-map-api-key="{{ section.settings.map_api_key | escape }}"
+    data-map-address="{{ section.settings.map_address | escape }}"
+    data-map-zoom="{{ section.settings.map_zoom }}"
+    data-map-color-a="{{ map_color_a }}"
+    data-map-color-b="{{ map_color_b }}"
+    data-map-color-c="{{ map_color_c }}"
+    data-map-color-d="{{ map_color_d }}"
+    data-map-color-e="{{ map_color_e }}"
+    data-map-color-f="{{ map_color_f }}"
+    {% if background_style %}
+      {{ background_style }}
+    {% endif %}
+  >
+    {% if section.settings.map_image %}
+      {%
+        include 'rimg',
+        img: section.settings.map_image,
+        class: 'map-image'
+        size: '2048x',
+        crop: map_image_crop
+        lazy: true
+      %}
+    {% endif %}
+
+    <div class="map-container" data-map-container></div>
+  </div>
+
+  {% if
+    section.settings.map_card_title != blank
+    or section.settings.map_card_content != blank
+  %}
+    <div class="map-card">
+      {% if section.settings.map_card_title != blank %}
+        <h2 class="map-card-heading">
+          {{ section.settings.map_card_title | escape }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.map_card_content != blank %}
+        <div class="map-card-content rte">
+          {{ section.settings.map_card_content }}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Map",
+  "class": "home-map",
+  "settings": [
+    {
+      "id": "map_height",
+      "type": "select",
+      "label": "Section height",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "fullscreen",
+          "label": "Fullscreen"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "header",
+      "content": "Text overlay"
+    },
+    {
+      "id": "map_card_title",
+      "type": "text",
+      "label": "Heading",
+      "default": "Location"
+    },
+    {
+      "id": "map_card_content",
+      "type": "richtext",
+      "label": "Address and hours",
+      "default": "<p>1221 Broad St</p><p>Victoria, BC</p>"
+    },
+    {
+      "type": "header",
+      "content": "Map"
+    },
+    {
+      "id": "map_address",
+      "type": "text",
+      "label": "Map address",
+      "default": "1221 Broad St, Victoria, BC"
+    },
+    {
+      "id": "map_api_key",
+      "type": "text",
+      "label": "Google Maps API key",
+      "info": "You’ll need to register a [Google Maps API Key](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) to display the map."
+    },
+    {
+      "id": "map_fg_color",
+      "type": "color",
+      "label": "Map foreground color",
+      "default": "#292929"
+    },
+    {
+      "id": "map_bg_color",
+      "type": "color",
+      "label": "Map background color",
+      "default": "#ffffff"
+    },
+    {
+      "id": "map_zoom",
+      "type": "range",
+      "label": "Map zoom level",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "unit": "x",
+      "default": 2
+    },
+    {
+      "id": "map_image",
+      "type": "image_picker",
+      "label": "Cover image",
+      "info": "This image is displayed when the map is not used or cannot be loaded"
+    },
+    {
+      "type": "select",
+      "id": "map_image_position",
+      "label": "Image position",
+      "default": "center-center",
+      "options": [
+        {
+          "label": "Top left",
+          "value": "top-left"
+        },
+        {
+          "label": "Top center",
+          "value": "top-center"
+        },
+        {
+          "label": "Top right",
+          "value": "top-right"
+        },
+        {
+          "label": "Center left",
+          "value": "center-left"
+        },
+        {
+          "label": "Center",
+          "value": "center-center"
+        },
+        {
+          "label": "Center right",
+          "value": "center-right"
+        },
+        {
+          "label": "Bottom left",
+          "value": "bottom-left"
+        },
+        {
+          "label": "Bottom center",
+          "value": "bottom-center"
+        },
+        {
+          "label": "Bottom right",
+          "value": "bottom-right"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Map",
+      "category": "Store information"
+    }
+  ]
+}
+
+{% endschema %}

@@ -1,0 +1,46 @@
+{%- capture _ -%}
+  {% comment %}
+    Supply a collection or collection handle, and get back the classname
+    associated with that particular collection / color pairing.
+
+    Examples:
+    {% include 'collection-color' %}
+    {% include 'collection-color' with 'frontpage' %}
+  {% endcomment %}
+
+  {%- capture collection_match -%}
+    {%- for i in (1..12) -%}
+      {% assign collection_number = 'collection_' | append: i %}
+  
+      {%- if settings[collection_number] == collection.handle -%}
+        collection-colored-{{ i }}
+        {% break %}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+
+  {% assign collection_match = collection_match | strip_newlines | replace: ' ', '' %}
+  {% if collection_match == '' %}
+    {% assign collection_color_classes = 'collection-colored-default' %}
+  {% else %}
+    {% assign collection_color_classes = collection_match %}
+  {% endif %}
+{%- endcapture -%}
+
+{% comment %}
+  Because we are using a global setting to find the collection color class,
+  the 'Theme Settings' menu will appear in the theme editor for any page
+  which includes this snippet. In order to include all the correct Theme
+  Setting fields, we will also need to access settings.collection_color_default
+  and individual collection colors and names, even if we don't use them.
+{% endcomment %}
+
+{% assign color_default = settings.collection_color_default %}
+{% for i in (1..12) %}
+  {% assign collection_color = 'collection_' | append: i | append: '_color' %}
+  {% assign collection_number = 'collection_' | append: i %}
+  {% assign collection_name = settings[collection_number] %}
+  {% assign color_setting = settings[collection_color] %}
+{% endfor %}
+
+{{- collection_color_classes -}}

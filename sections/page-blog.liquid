@@ -1,0 +1,84 @@
+<script
+  type="application/json"
+  data-section-id="{{ section.id }}"
+  data-section-type="page-blog"
+>
+</script>
+
+<div class="contained">
+  <header class="blog-header">
+    <h1 class="page-title">
+      {% if current_tags %}<a href="{{ blog.url }}">{% endif %}
+      {{ blog.title }}
+      {% if current_tags %}</a>{% endif %}
+    </h1>
+    {% if section.settings.show_rss_link %}
+      <a href="{{ blog.url }}.atom" class="blog-rss-link">{{ 'blogs.blog.subscribe' | t }}</a>
+    {% endif %}
+  </header>
+
+  {% if blog.all_tags.size > 0 and section.settings.show_tags %}
+    {% include 'tags-list' with blog %}
+  {% endif %}
+
+  {% paginate blog.articles by section.settings.pagination %}
+
+    <div class="blog-posts" data-article-list>
+      <div class="article-item-grid-sizer"></div>
+      <div class="article-item-gutter-sizer"></div>
+      {% for article in blog.articles %}
+        {% include 'article-list-item' %}
+      {% else %}
+        <p class="empty">
+          {{ 'blogs.blog.empty' | t }}
+        </p>
+      {% endfor %}
+    </div>
+
+    {% if paginate.previous or paginate.next %}
+      {% include 'pagination' %}
+    {% endif %}
+
+  {% endpaginate %}
+</div>
+
+{% schema %}
+{
+  "name": "Blog page",
+  "settings": [
+    {
+      "type": "range",
+      "id": "pagination",
+      "label": "Articles per page",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rss_link",
+      "label": "Show RSS link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show tags",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show post author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show blog excerpt",
+      "default": true
+    }
+  ]
+}
+
+{% endschema %}

@@ -1,0 +1,108 @@
+<section
+  class="
+  home-newsletter-section
+  home-section-background-{{ section.settings.background_color }}
+  "
+  data-section-id="{{ section.id }}"
+  data-section-type="home-newsletter"
+  data-home-section
+>
+  <article class="home-newsletter-form">
+    {% if section.settings.heading != blank %}
+      <h1 class="home-newsletter-heading jc-home-newsletter-heading">
+        {{ section.settings.heading }}
+      </h1>
+    {% endif %}
+
+    {% if section.settings.text != blank %}
+      <div class="home-newsletter-text">
+        {{ section.settings.text }}
+      </div>
+    {% endif %}
+
+    {% form 'customer' %}
+      {{ form.errors | default_errors }}
+
+      {% if form.posted_successfully? %}
+        <p class="form-success">{{ 'signup_form_success' | t }}</p>
+      {% else %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label for="homepage-email" class="input-label input-label-hidden">
+          {{ 'signup_form_email_label' | t }}
+        </label>
+        <div class="input-wrapper inline-input-button-wrapper">
+          <input
+            type="submit"
+            class="button jc-home-newsletter-btn"
+            value="{{ 'subscribe' | t }}"
+          >
+          <div class="inline-input-wrapper">
+            <input
+              id="homepage-email"
+              class="jc-input-field input-field homepage-email-input"
+              type="text"
+              name="contact[email]"
+              placeholder="{{ 'email_placeholder' | t }}"
+            >
+          </div>
+        </div>
+      {% endif %}
+    {% endform %}
+  </article>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "class": "home-newsletter",
+  "settings": [
+    {
+      "id": "background_color",
+      "type": "select",
+      "label": "Background color",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "contrast",
+          "label": "Contrast"
+        }
+      ]
+    },
+    {
+      "id": "heading",
+      "type": "text",
+      "label": "Heading",
+      "default": "The latest news in your inbox"
+    },
+    {
+      "id": "text",
+      "type": "richtext",
+      "label": "Text",
+      "default": "<p>The latest news and stories in your inbox</p>"
+    }
+  ],
+  "locales": {
+    "en": {
+      "signup_form_email_label": "Enter your email:",
+      "email_placeholder": "Enter your email address",
+      "subscribe": "Subscribe",
+      "signup_form_success": "Thanks for signing up!"
+    }
+  },
+  "presets": [
+    {
+      "category": "Promotional",
+      "name": "Newsletter"
+    }
+  ]
+}
+
+{% endschema %}

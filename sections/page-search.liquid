@@ -1,0 +1,120 @@
+<header class="search-header">
+  <div class="search-header-details">
+    <form class="input-wrapper inline-input-button-wrapper" action="/search">
+      <input type="hidden" name="type" value="article,page,product">
+
+      <div class="inline-input-wrapper search-input-wrapper">
+        {%- include 'icon-search' -%}
+
+        <input
+          class="input-field"
+          name="q"
+          type="search"
+          data-search-input
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'general.search.search_placeholder' | t }}"
+          aria-label="{{ 'general.search.search_placeholder' | t }}">
+      </div>
+
+    </form>
+  </div>
+</header>
+
+{% if search.performed %}
+  <div class="collection-listing">
+    {% paginate search.results by section.settings.pagination %}
+      {% assign row_helpers = 'rows-of-3' %}
+
+      {% capture product_crop %}product-crop-{{ section.settings.product_aspect_ratio }}{% endcapture %}
+
+      <div class="collection-products product-list {{ product_crop }} {{ row_helpers }}">
+        {% for item in search.results %}
+          {% if item.object_type == 'product' %}
+            {% include 'product-list-item' %}
+          {% elsif item.object_type != 'product' %}
+            {% if item.object_type == 'article' %}
+              <div class="search-item-article">
+                <a href="{{ item.url }}" class="search-item-article-link">
+                  {% if item.image %}
+                    {%
+                      include 'rimg',
+                      img: item.image,
+                      size: '600x',
+                      crop: 'center',
+                      lazy: true
+                    %}
+                  {% else %}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-search' }}
+                  {% endif %}
+                </a>
+                <span class="search-item-article-type">
+                  {{ 'general.search.result_article' | t }}
+                </span>
+                <a class="search-result-link" href="{{ item.url }}">
+                  {{ item.title }}
+                </a>
+                <a class="search-item-article-link" href="{{ item.url }}">
+                  {{ 'general.search.read_post' | t }}
+                </a>
+              </div>
+            {% else %}
+              <div class="search-item-page">
+                <a href="{{ item.url }}">{{ 'image' | placeholder_svg_tag: 'placeholder-search' }}</a>
+                <span class="search-item-article-type">{{ 'general.search.result_page' | t }}</span>
+                <a class="search-result-link" href="{{ item.url }}">{{ item.title }}</a>
+              </div>
+            {% endif %}
+          {% else %}
+            <p class="empty">
+              {{ 'general.search.no_results' | t: search_terms: search.terms }}
+            </p>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% include 'pagination' %}
+    {% endpaginate %}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Search page",
+  "settings": [
+    {
+      "type": "range",
+      "id": "pagination",
+      "label": "Products per page",
+      "min": 6,
+      "max": 30,
+      "step": 6,
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "product_aspect_ratio",
+      "label": "Product aspect ratio",
+      "options": [
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "short",
+          "label": "Short"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "tall",
+          "label": "Tall"
+        }
+      ],
+      "default": "tall"
+    }
+  ]
+}
+
+{% endschema %}

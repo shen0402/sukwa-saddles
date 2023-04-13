@@ -1,0 +1,105 @@
+{% comment %}
+
+  @param item Product
+         The product to display.
+
+  @param placeholder String
+         If set, use a Shopify placeholder SVG as the product image.
+
+  @param title String
+         The product title to use. Only used if no `item` is passed.
+
+{% endcomment %}
+
+{% assign image_size = '1024x' %}
+{% assign placeholder_style = placeholder | default: 'image' %}
+
+{% if item.featured_image %}
+  {%- capture background_style -%}
+    {%
+      include 'rimg',
+      img: item.featured_image,
+      size: image_size,
+      crop: 'center',
+      lazy: true,
+      background: true
+    %}
+  {%- endcapture -%}
+{% else %}
+  {%- capture placeholder_uri -%}
+    {%-
+      include 'placeholder_svg_uri',
+      placeholder: placeholder_style
+    -%}
+  {%- endcapture -%}
+
+  {%- capture background_style -%}
+    style="background-image: url('{{ placeholder_uri }}');"
+  {%- endcapture -%}
+{% endif %}
+
+<article class="product-list-item">
+  {% include 'product-badge' %}
+
+  <a href="{{ item.url | within: collection | default: '#' }}">
+    <figure
+      class="
+        product-list-item-thumbnail
+        {% unless item.featured_image %}
+          product-list-item-thumbnail-placeholder
+        {% endunless %}
+      "
+      {{ background_style }}
+    >
+      {% if item.featured_image %}
+        {%
+          include 'rimg',
+          img: item.featured_image,
+          size: image_size,
+          crop: 'center',
+          lazy: true
+        %}
+      {% else %}
+        <img
+          src="{{ placeholder_uri }}"
+          alt="{{ title | default: product.title | escape }}"
+        >
+      {% endif %}
+    </figure>
+
+    {% if template contains 'search' %}
+      <div class="search-item-product-details">
+        <span class="search-item-product-title">
+          {% if item %}
+            {{ item.title }}
+          {% else %}
+            {{ title }}
+          {% endif %}
+        </span>
+        {% if item.available %}
+          <span class="search-item-product-price">
+            {% if item.price_varies %}{{ 'products.product.from' | t }}{% endif %}
+            <span data-money>{{ item.price_min | money }}</span>
+          </span>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="jc-product-list-item-details product-list-item-details {% if item.price %}has-price{% endif %}">
+        <h1 class="product-list-item-title jc-product-list-item-title">
+          {% if item %}
+            {{ item.title }}
+          {% else %}
+            {{ title }}
+          {% endif %}
+
+          {% if item.available %}
+            <span class="product-list-item-price">
+              - {% if item.price_varies %}{{ 'products.product.from' | t }}{% endif %}
+              <span data-money>{{ item.price_min | money }}</span>
+            </span>
+          {% endif %}
+        </h1>
+      </div>
+    {% endif %}
+  </a>
+</article>

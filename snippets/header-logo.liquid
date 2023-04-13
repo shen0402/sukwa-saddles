@@ -1,0 +1,20 @@
+{% comment %}
+  @param logo Image
+{% endcomment %}
+
+<a href="/">
+  {% if logo %}
+    {%
+      include 'rimg',
+      class: 'logo'
+      alt: shop.name
+      img: logo,
+      size: '600x200',
+      lazy: false
+    %}
+  {% else %}
+    <span class="logo-text">
+      {{ shop.name }}
+    </span>
+  {% endif %}
+</a>

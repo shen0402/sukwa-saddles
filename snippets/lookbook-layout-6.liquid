@@ -1,0 +1,18 @@
+{% assign class_name = 'lookbook-layout-6' %}
+{% if is_alt %}
+  {% capture class_name %}{{ class_name }} lookbook-layout-6-alt{% endcapture %}
+{% endif %}
+
+<article class="lookbook-layout {{ class_name }} {{ row_color }}">
+  <div class="lookbook-slots">
+
+    {% for image in product.images %}
+      <div class="lookbook-slot lookbook-slot-{{ forloop.index }}">
+        {% include 'lookbook-image', image: image %}
+      </div>
+    {% endfor %}
+
+    {% include 'lookbook-label', truncate_length: 60 %}
+
+  </div>
+</article>

@@ -1,0 +1,55 @@
+{% comment %}
+  @param primary_menu LinkedList
+  @param secondary_menu LinkedList
+  @param social_settings
+  @param enable_payment_icons Boolean
+{% endcomment %}
+
+<div class="main-navigation" role="banner">
+
+  <nav class="main-navigation-menu">
+    {% include 'main-navigation-submenu', menu: primary_menu, depth: 3 %}
+
+    <ul class="navigation-menu navigation-secondary-list">
+      {% if secondary_menu %}
+        {% for link in linklists[secondary_menu].links %}
+          <li>
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          </li>
+        {% endfor %}
+      {% endif %}
+
+      {% if shop.customer_accounts_enabled %}
+        {% capture header_login_text %}
+          {% if customer %}
+            <a href="/account">
+              {{ 'layout.header.logged_in_as_html' | t: user_name: customer.first_name }}
+            </a>
+          {% else %}
+            {{ 'layout.header.login' | t | customer_login_link }}
+          {% endif %}
+        {% endcapture %}
+
+        <li>
+          {{ header_login_text | strip_newlines }}
+        </li>
+
+        {% if customer %}
+          <li>
+            {{ 'layout.header.logout' | t | customer_logout_link }}
+          </li>
+        {% else %}
+          {% if shop.customer_accounts_optional %}
+            <li>
+              {{ 'layout.header.create_an_account' | t | customer_register_link }}
+            </li>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    </ul>
+  </nav>
+
+  {% include 'main-navigation-social' %}
+  {% include 'main-footer', enable_payment_icons: enable_payment_icons %}
+
+</div>

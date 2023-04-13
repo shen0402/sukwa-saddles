@@ -1,0 +1,280 @@
+{% assign has_content = false %}
+{% assign image_size = '2048x' %}
+{%
+  if section.settings.heading != blank
+  or section.settings.text != blank
+  or section.settings.button_link != blank
+  and section.settings.button_label != blank
+%}
+  {% assign has_content = true %}
+  {% assign image_size = '1024x' %}
+{% endif %}
+
+{% assign image_crop = section.settings.image_position | split: '-' | last %}
+
+<section
+  class="home-image-text-section"
+  data-section-id="{{ section.id }}"
+  data-section-type="home-image-text"
+  data-home-section
+>
+  <div class="home-image-text-container">
+    <div
+      class="
+        home-image-image-block
+        home-image-text-desktop-{{ section.settings.desktop }}
+        home-image-text-mobile-{{ section.settings.mobile }}
+        home-image-crop-{{ section.settings.image_position }}
+        home-section-height-{{ section.settings.section_height }}
+        {% unless section.settings.image %}
+          home-image-image-block-no-image
+        {% endunless %}
+      "
+      {% if section.settings.image %}
+        {%
+          include 'rimg',
+          img: section.settings.image,
+          size: image_size,
+          crop: image_crop,
+          lazy: true,
+          background: true
+        %}
+      {% endif %}
+    >
+      {% if section.settings.image %}
+        {%
+          include 'rimg',
+          img: section.settings.image,
+          size: image_size,
+          crop: image_crop,
+          class: 'home-image-text-image',
+          lazy: true
+        %}
+      {% else %}
+        {{ 'image' | placeholder_svg_tag: 'home-image-text-image-placeholder placeholder-svg' }}
+      {% endif %}
+    </div>
+
+    {% if has_content %}
+      <div
+        class="
+          home-image-text-block
+          home-section-height-{{ section.settings.section_height }}
+          home-image-text-background-{{ section.settings.background_color }}
+          home-image-text-justification-{{ section.settings.text_justification }}
+        "
+      >
+        <article class="home-image-text-block-content">
+          {% if section.settings.heading != blank %}
+            <h1 class="home-image-text-heading">
+              {{ section.settings.heading | escape }}
+            </h1>
+          {% endif %}
+
+          {% if section.settings.text != blank %}
+            <div class="home-image-text-content rte">
+              {{ section.settings.text }}
+            </div>
+          {% endif %}
+
+          {% if section.settings.button_link != blank and section.settings.button_label != blank %}
+            <a
+              class="button home-image-text-button"
+              href="{{ section.settings.button_link }}"
+            >
+              {{ section.settings.button_label | escape }}
+            </a>
+          {% endif %}
+        </article>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image with rich text",
+  "class": "home-image-text",
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_height",
+      "label": "Section height",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "contrast",
+      "options": [
+        {
+          "label": "None",
+          "value": "none"
+        },
+        {
+          "label": "White",
+          "value": "white"
+        },
+        {
+          "label": "Contrast",
+          "value": "contrast"
+        }
+      ]
+    },
+    {
+      "id": "image",
+      "type": "image_picker",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "default": "center-center",
+      "options": [
+        {
+          "label": "Top left",
+          "value": "top-left"
+        },
+        {
+          "label": "Top center",
+          "value": "top-center"
+        },
+        {
+          "label": "Top right",
+          "value": "top-right"
+        },
+        {
+          "label": "Center left",
+          "value": "center-left"
+        },
+        {
+          "label": "Center",
+          "value": "center-center"
+        },
+        {
+          "label": "Center right",
+          "value": "center-right"
+        },
+        {
+          "label": "Bottom left",
+          "value": "bottom-left"
+        },
+        {
+          "label": "Bottom center",
+          "value": "bottom-center"
+        },
+        {
+          "label": "Bottom right",
+          "value": "bottom-right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop the dress"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+    },
+    {
+      "type": "select",
+      "id": "text_justification",
+      "label": "Text alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop the dress"
+    },
+    {
+      "type": "header",
+      "content": "Image Layout"
+    },
+    {
+      "type": "select",
+      "id": "desktop",
+      "label": "Desktop",
+      "default": "right",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile",
+      "label": "Mobile",
+      "default": "above",
+      "options": [
+        {
+          "label": "Above content",
+          "value": "above"
+        },
+        {
+          "label": "Below content",
+          "value": "below"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Image",
+      "name": "Image with rich text"
+    }
+  ]
+}
+
+{% endschema %}

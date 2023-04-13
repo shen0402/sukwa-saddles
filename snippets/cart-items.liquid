@@ -1,0 +1,117 @@
+<table class="cart-items">
+  <tbody>
+    {% for item in cart.items %}
+      <tr
+        class="cart-item"
+        data-cart-item-row
+        data-cart-item-index="{{ forloop.index }}"
+        data-url="{{ item.url }}">
+
+        <td class="cart-item-product">
+
+          <a class="cart-item-image-link" href="{{ item.url }}">
+            {% if item.image %}
+              {%
+                include 'rimg',
+                img: item.image,
+                size: '200x120',
+                class: 'cart-item-image',
+                alt: item.title,
+                lazy: true
+              %}
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </a>
+
+          <ul class="cart-item-product-info">
+            <li>
+              <a class="cart-item-title" href="{{ item.url }}" data-title>
+                {{ item.product.title }}
+              </a>
+            </li>
+
+            <li>
+              {{ 'cart.general.price' | t }} <span data-money data-product-price>{{ item.price | money }}</span>
+            </li>
+
+            {% unless item.product.has_only_default_variant %}
+              <li>
+                {{ item.variant.title }}
+              </li>
+            {% endunless %}
+
+            <!-- TODO: Check these -->
+            {% if item.properties %}
+              <li class="cart-item-properties">
+                {% for property in item.properties %}
+                  {% unless property.last == blank %}
+                    <div class="cart-item-property">
+                      <span class="cart-item-property-label">{{ property.first }}:</span>
+                      {% if property.last contains '/uploads/' %}
+                        <a class="cart-item-property-image" href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
+                      {% else %}
+                        <span class="cart-item-property-value">{{ property.last }}</span>
+                      {% endif %}
+                    </div>
+                  {% endunless %}
+                {% endfor %}
+              </li>
+            {% endif %}
+
+            <li>
+              <a
+                class="cart-item-remove"
+                href="/cart/change?line={{ forloop.index }}&amp;quantity=0"
+                title="{{ 'general.general.remove' | t }}"
+                data-cart-item-remove
+              >
+                {{ 'general.general.remove' | t }}
+              </a>
+            </li>
+          </ul>
+        </td>
+
+        <td class="cart-item-quantity">
+          <span class="cart-item-quantity-wrapper jc-cart-item-quantity-wrapper">
+            <button
+              class="cart-item-quantity-adjust cart-item-decrement"
+              data-cart-item-decrement
+              type="button"
+              aria-label="{{ 'cart.general.decrease' | t }}">
+              {%- include 'icon-minus' -%}
+            </button>
+
+            <input
+              class="cart-item-quantity-input input-field"
+              name="updates[{{ item.id }}]"
+              type="text"
+              value="{{ item.quantity }}"
+              size="3"
+              aria-label="{{ 'cart.general.quantity' |  t }}"
+              data-product-quantity
+            >
+
+              <button
+                class="cart-item-quantity-adjust cart-item-increment"
+                data-cart-item-increment
+                type="button"
+                aria-label="{{ 'cart.general.increase' | t }}">
+                {%- include 'icon-plus' -%}
+              </button>
+            </span>
+        </td>
+
+        <td class="cart-item-total">
+          <span
+            class="cart-item-total-price"
+            data-money
+            data-item-price>
+            {{ item.quantity | times: item.price | money }}
+          </span>
+        </td>
+
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

@@ -1,0 +1,13 @@
+{% if item.price %}
+  {% if item.available %}
+    {% if item.compare_at_price_min > item.price_min %}
+      <span class="product-badge product-badge-sale">
+        {{ 'products.product.on_sale' | t }}
+      </span>
+    {% endif %}
+  {% else %}
+    <span class="product-badge product-badge-unavailable">
+      {{ 'products.product.sold_out' | t }}
+    </span>
+  {% endif %}
+{% endif %}

@@ -1,0 +1,113 @@
+{% if section.settings.show_shipping_calculator and cart.requires_shipping %}
+  <script type="application/json" data-shipping-calculator-data>
+    {
+      "customerCountry": {{ customer.default_address | json }},
+      "submitButton": {{ 'cart.shipping_calculator.submit' | t | json }},
+      "submitButtonDisabled": {{ 'cart.shipping_calculator.disabled' | t | json }},
+      "errorMessage": {{ 'cart.shipping_calculator.error' | t: error_message: '*error_message*' | json }},
+      "multiRates": {{ 'cart.shipping_calculator.rates_html' | t: address: '*address*', number_of_rates: '*number_of_rates*', rate: '*rate*' | json }},
+      "oneRate": {{ 'cart.shipping_calculator.rate' | t: address: '*address*' | json }},
+      "noRates": {{ 'cart.shipping_calculator.no_rates' | t | json }},
+      "rateValues": {{ 'cart.shipping_calculator.rate_values_html' | t: rate_title: '*rate_title*', rate: '*rate*' | json }}
+    }
+  </script>
+
+  {% assign default_province = '' %}
+  {% assign default_zip = '' %}
+
+  {% if section.settings.shipping_calculator_default_country != '' %}
+    {%- capture default_country -%}{{ section.settings.shipping_calculator_default_country | escape }}{%- endcapture -%}
+  {% else %}
+    {% assign default_country = '' %}
+  {% endif %}
+
+  {% if shop.customer_accounts_enabled and customer %}
+
+    {% if customer.default_address.country != '' %}
+      {%- capture default_country -%}{{ customer.default_address.country }}{%- endcapture -%}
+    {% endif %}
+
+    {% if customer.default_address.province != '' %}
+      {%- capture default_province -%}{{ customer.default_address.province }}{%- endcapture -%}
+    {% endif %}
+
+    {% if customer.default_address.zip != '' %}
+      {%- capture default_zip -%}{{ customer.default_address.zip }}{%- endcapture -%}
+    {% endif %}
+
+  {% endif %}
+
+  <div class="cart-shipping" data-shipping-calculator>
+    <h2 class="cart-title">{{ 'cart.shipping_calculator.header' | t }}</h2>
+    <p class="cart-shipping-prompt">{{ 'cart.shipping_calculator.prompt' | t }}</p>
+
+    <div class="cart-shipping-fields">
+      <div class="cart-shipping-row" id="address_country_container">
+        <label
+          class="input-label input-label-hidden"
+          id="address_country_label"
+          for="address_country">
+          {{ 'cart.shipping_calculator.select_country' | t }}
+        </label>
+        <div class="select-wrapper">
+          <select
+            class="input-select"
+            id="address_country"
+            name="address[country]"
+            {% if default_country != '' %}data-default="{{ default_country }}"{% endif %}
+            aria-label="{{ 'cart.shipping_calculator.select_country' | t }}">
+            {{ country_option_tags }}
+          </select>
+        </div>
+      </div>
+
+      <div class="cart-shipping-row" id="address_province_container">
+        <label
+          class="input-label input-label-hidden"
+          id="address_province_label"
+          for="address_province">
+          {{ 'cart.shipping_calculator.select_province' | t }}
+        </label>
+        <div class="select-wrapper">
+          <select
+            class="input-select"
+            id="address_province"
+            name="address[province]"
+            {% if default_province != '' %}data-default="{{ default_province }}"{% endif %}
+            aria-label="{{ 'cart.shipping_calculator.select_province' | t }}">
+          </select>
+        </div>
+      </div>
+
+      <div class="cart-shipping-row">
+        <label
+          class="input-label input-label-hidden"
+          for="address_zip">
+          {{ 'cart.shipping_calculator.zip' | t }}
+        </label>
+        <input
+          class="cart-input-field input-field"
+          id="address_zip"
+          name="address[zip]"
+          type="text"
+          placeholder="{{ 'cart.shipping_calculator.zip' | t }}"
+          aria-label="{{ 'cart.shipping_calculator.zip' | t }}"
+          {% if default_zip != blank %}value="{{ default_zip }}"{% endif %}>
+      </div>
+
+      <div class="cart-shipping-row">
+        <button
+          class="button button-alternate"
+          data-calculate-shipping
+          type="button">
+          {{ 'cart.shipping_calculator.submit' | t }}
+        </button>
+      </div>
+    </div>
+
+    <div class="cart-shipping-response" data-shipping-response>
+      <p class="cart-shipping-message" data-shipping-response-message></p>
+      <ul class="cart-shipping-rates" data-shipping-response-rates></ul>
+    </div>
+  </div>
+{% endif %}

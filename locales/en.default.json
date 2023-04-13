@@ -1,0 +1,336 @@
+{
+  "general": {
+    "title": {
+      "tags": " — Tagged \"{{ tags }}\"",
+      "page": " — Page {{ page }}",
+      "shop": " — {{ shop }}"
+    },
+    "general": {
+      "cancel": "Cancel",
+      "close": "Close",
+      "name": "Name",
+      "name_placeholder": "Name",
+      "email": "Email",
+      "email_placeholder": "Email Address",
+      "phone": "Phone",
+      "phone_placeholder": "Phone Number",
+      "message": "Message",
+      "message_placeholder": "Write your message here",
+      "password": "Password",
+      "repeat_password": "Repeat password",
+      "product": "Product",
+      "price": "Price",
+      "quantity": "Quantity",
+      "subtotal": "Subtotal:",
+      "total": "Total",
+      "remove": "Remove",
+      "read_more": "Read more",
+      "instagram_error": "Please verify your Access token for Instagram."
+    },
+    "password_page": {
+      "admin_link_html": "Are you the store owner? <a href=\"\/admin\" class=\"text-link\">Log in here<\/a>",
+      "opening_soon": "COMING SOON",
+      "login_form_heading": "Enter store using password:",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "signup_form_email_label": "Enter your email:",
+      "signup_form_email_placeholder": "Your email",
+      "signup_form_submit": "SUBSCRIBE",
+      "signup_form_success": "Thanks for signing up!",
+      "password_link": "Enter using password",
+      "share_label": "Spread the word:"
+    },
+    "404": {
+      "header": "Sorry, but we can't find that page :(",
+      "message_html": "Have a look at this featured collection, try going to the {{ home_link }} or {{ search_link }} the site again.",
+      "search_link": "searching",
+      "home_link": "homepage"
+    },
+    "breadcrumbs": {
+      "home": "Home",
+      "products": "Products",
+      "tagged": "Tagged",
+      "404": "404",
+      "account": "Account"
+    },
+    "contact": {
+      "error": "Error! Something went wrong.",
+      "success": "Thank you for submitting your message. We will get back to you as soon as we can.",
+      "submit": "Submit"
+    },
+    "currency": {
+      "label": "Choose a currency"
+    },
+    "pagination": {
+      "next": "Next",
+      "previous": "Previous",
+      "pagination_summary": "Page {{ current_page }} of {{ total_pages }}",
+      "product_pagination_html": "Product {{ current_page }} of {{ total_pages }}"
+    },
+    "search": {
+      "header": "Search",
+      "search_placeholder": "Search here",
+      "submit": "Search",
+      "no_results": "Your search for '{{ search_terms }}' has returned no results.",
+      "search_results": "Search results for '{{ search_terms }}'",
+      "result_article": "Journal",
+      "result_page": "Page",
+      "read_post": "Read post"
+    },
+    "social": {
+      "share": "Share",
+      "like": "Like",
+      "tweet": "Tweet",
+      "pin_it": "Pin it",
+      "fancy": "Fancy",
+      "plus_one": "+1",
+      "email": "Email",
+      "email_body": "Check this out {{ link }}"
+    }
+  },
+  "home": {
+    "collection": {
+      "view_link": "View collection"
+    },
+    "collection_list": {
+      "title": "Collection",
+      "description_html": "<p>Collection description<\/p>"
+    }
+  },
+  "layout": {
+    "header": {
+      "logged_in_as_html": "Logged in as {{ user_name }}",
+      "logout": "Log out",
+      "login": "Log in",
+      "create_an_account": "Create an account",
+      "cart_item_count": {
+        "one": "item",
+        "other": "items"
+      },
+      "mini_cart": "Cart",
+      "search_placeholder": "Enter search terms",
+      "search_submit": "Search"
+    },
+    "navigation": {
+      "menu": "Menu",
+      "cart": "Cart",
+      "cart_html": "Cart {{ number_of_items }}",
+      "product_details_close": "Close details",
+      "product_details_close_short": "Close",
+      "product_details_open": "Details"
+    },
+    "footer": {
+      "copyright_html": "Copyright &copy; {{ year }} {{ shop_name }}.",
+      "copyright_credit_html": "<a href=\"https:\/\/www.pixelunion.net\/\">Vogue Theme by Pixel Union<\/a>."
+    }
+  },
+  "blogs": {
+    "blog": {
+      "subscribe": "RSS Feed",
+      "posts_tagged": "Posts tagged: {{ tag }}",
+      "empty": "This blog is empty!"
+    },
+    "article_item": {
+      "posted_by": "by {{author}}",
+      "back_to": "Back to posts",
+      "tags_label": "Tags",
+      "comment_count": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      },
+      "leave_a_comment": "Leave a comment",
+      "comment_pending": "Your comment has been submitted but needs to be approved by the store before posting.",
+      "comment_success": "Your comment bas been successfully posted! Refresh the page to see it.",
+      "comment_error": "Error! Something went wrong.",
+      "submit": "Post comment"
+    }
+  },
+  "cart": {
+    "general": {
+      "continue_link": "Continue shopping",
+      "empty_html": "You don't have any items in your cart yet. {{ continue_link }}.",
+      "decrease": "Decrease",
+      "header": "YOUR CART",
+      "generic_title": "Cart",
+      "increase": "Increase",
+      "item": "Item",
+      "item_total": "Item Total",
+      "item_removed": "{{ title }} has been removed from your cart.",
+      "item_stock": "You can only have {{ quantity }} {{ title }} in your cart.",
+      "note": "Add special instructions...",
+      "price": "Price:",
+      "quantity": "Quantity",
+      "submit": "Checkout now",
+      "special_instructions": "Special instructions",
+      "tax_and_shipping": "Tax and shipping will be calculated at checkout."
+    },
+    "shipping_calculator": {
+      "header": "Calculate Shipping",
+      "prompt": "Please enter your details to calculate shipping.",
+      "country": "Country",
+      "select_country": "Select country",
+      "province": "Province",
+      "select_province": "Select province",
+      "zip": "Zip\/Postal Code",
+      "error": "Error: zip \/ postal code {{ error_message }}",
+      "submit": "Calculate shipping",
+      "disabled": "Calculating...",
+      "rates_html": "There are {{ number_of_rates }} shipping rates available for {{ address }}, starting at {{ rate }}.",
+      "rate": "There is one shipping rate available for {{ address }}.",
+      "no_rates": "We do not ship to this destination.",
+      "rate_values_html": "{{ rate_title }} at {{ rate }}"
+    }
+  },
+  "collections": {
+    "collection": {
+      "close": "Close",
+      "empty": "This collection is empty."
+    },
+    "collection_sorting": {
+      "filter": "Filter",
+      "sort_by": "Sort by",
+      "manual": "Featured",
+      "price_ascending": "$ Low to High",
+      "price_descending": "$ High to Low",
+      "title_ascending": "A-Z",
+      "title_descending": "Z-A",
+      "created_ascending": "Oldest to Newest",
+      "created_descending": "Newest to Oldest",
+      "best_selling": "Best Selling"
+    }
+  },
+  "lookbook": {
+    "sorting": {
+      "tags": "Tags:"
+    }
+  },
+  "customers": {
+    "general": {
+      "first_name": "First name",
+      "last_name": "Last name"
+    },
+    "account": {
+      "header": "Your account",
+      "default_address": "Default Address",
+      "no_addresses_html": "You don't have any addresses saved to your account. Speed up your checkout process by adding a {{ new_address_link }}.",
+      "new_address_link": "new address",
+      "view_addresses": "View addresses",
+      "order_history": "Order History",
+      "order": "Order",
+      "payment": "Payment",
+      "fulfillment": "Fulfillment",
+      "empty": "You haven't placed any orders yet."
+    },
+    "activate_account": {
+      "header": "Activate account",
+      "message": "To activate your account, choose a password and enter it below.",
+      "submit": "Submit",
+      "decline_activation": "Decline activation"
+    },
+    "addresses": {
+      "first_name": "First name",
+      "last_name": "Last name",
+      "header": "Addresses",
+      "add_new_address": "Add new address",
+      "default_address_message": "This is the default address.",
+      "edit": "Edit",
+      "delete": "Delete",
+      "set_default": "Set as Default Address?",
+      "company": "Company",
+      "address_1": "Address line 1",
+      "address_2": "Address line 2",
+      "city": "City",
+      "country": "Country",
+      "province": "State \/ Province",
+      "zip": "Zip \/ Postal Code",
+      "phone": "Phone",
+      "submit": "Submit"
+    },
+    "guest_checkout": {
+      "header": "Checkout as guest",
+      "message": "Checkout as guest. No login required.",
+      "submit": "Checkout as guest"
+    },
+    "login": {
+      "header": "Log in",
+      "message": "We've sent you an email containing a password reset link. If you remember your password before you receive our email, feel free to log in below:",
+      "error": "Sorry! Please try that again.",
+      "submit": "Login",
+      "forgot_your_password": "Forgot your password?",
+      "recover_password_message": "We'll send you an email to reset your password."
+    },
+    "new_customer": {
+      "header": "New Customer?",
+      "message": "Sign up for an account to take advantage of order tracking and history as well as pre-filled forms during checkout on subsequent orders."
+    },
+    "order": {
+      "header": "Order {{ order_number }}",
+      "shipping": "Shipping",
+      "tax": "Tax",
+      "shipping_address": "Shipping Address",
+      "billing_address": "Billing Address"
+    },
+    "register": {
+      "header": "Sign up",
+      "submit": "Register"
+    },
+    "reset_password": {
+      "header": "Reset password",
+      "message": "Enter a new password for {{ user }}:",
+      "error": "There was an error resetting your password, please try again.",
+      "submit": "Reset"
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "Here's your {{ value }} gift card for {{ shop }}!",
+      "subtext": "Here's your gift card!",
+      "disabled": "Sorry, but this gift card has been disabled",
+      "expired": "Expired on {{ expiry }}",
+      "active": "Expires on {{ expiry }}",
+      "redeem": "Use this code at checkout to redeem your gift card",
+      "shop_link": "Start shopping",
+      "print": "Print",
+      "add_to_apple_wallet": "Add to Apple Wallet",
+      "image_alt_text": "Gift card illustration",
+      "amount_left": "{{ balance }} left"
+    }
+  },
+  "products": {
+    "product": {
+      "from": "from",
+      "on_sale": "Sale",
+      "sold_out": "Sold out",
+      "add_to_cart": "Add to cart",
+      "unavailable": "Unavailable",
+      "processing": "Processing...",
+      "no_image": "No image available",
+      "read_more": "Read more",
+      "select_options": "Select options"
+    },
+    "related_products": {
+      "header": "Related Looks"
+    }
+  },
+  "date_formats": {
+    "short_month": "%b %d, %Y",
+    "gift_card_expiry": "%d\/%m\/%y"
+  },
+  "instagram": {
+    "months": {
+      "january": "Jan",
+      "february": "Feb",
+      "march": "Mar",
+      "april": "Apr",
+      "may": "May",
+      "june": "Jun",
+      "july": "Jul",
+      "august": "Aug",
+      "september": "Sep",
+      "october": "Oct",
+      "november": "Nov",
+      "december": "Dec"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<div class="cart-content">
+  <h1 class="page-title">{{ 'cart.general.header' | t }}</h1>
+
+  <div data-cart-message></div>
+
+  {% include 'cart-form', in_sidebar: false %}
+</div>
+
+<script>
+  Theme.cart = {
+    itemRemoved: {{ 'cart.general.item_removed' | t: title: '** title **' | json }},
+    itemStock: {{ 'cart.general.item_stock' | t: quantity: '** quantity **', title: '** title **' | json }}
+  };
+</script>
+
+{% schema %}
+{
+  "name": "Cart page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_checkout_lock_icon",
+      "label": "Show lock icon on checkout button",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_cart_notes",
+      "label": "Enable order notes"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_calculator",
+      "label": "Show shipping rates calculator"
+    },
+    {
+      "type": "text",
+      "id": "shipping_calculator_default_country",
+      "label": "Default country selection",
+      "default": "United States",
+      "info": "If your customer is logged-in, the country in their default shipping address will be selected. If you are not sure about the spelling to use here, refer to the first checkout page."
+    }
+  ]
+}
+
+{% endschema %}

@@ -1,0 +1,98 @@
+<article class="article page-content">
+  <header class="article-header{% if article.image %} article-has-image{% endif %}">
+    <h1 class="article-title page-title">{{ article.title }}</h1>
+
+    <aside class="article-meta">
+      {% if section.settings.show_author %}
+        <span class="article-author">{{ 'blogs.article_item.posted_by' | t: author: article.author }}</span>
+      {% endif %}
+      <span class="article-date">{{ article.published_at | date: format: 'short_month' }}</span>
+    </aside>
+
+    {% if article.image %}
+      <figure class="article-image">
+        {%
+          include 'rimg',
+          img: article.image,
+          size: '800x',
+          lazy: true
+        %}
+      </figure>
+    {% endif %}
+  </header>
+  <div class="article-body rte">
+    {{ article.content }}
+  </div>
+
+  <footer class="article-footer">
+    {% if section.settings.show_tags and article.tags.size > 0 %}
+      <aside class="article-tags">
+        <span class="article-tags-label">
+          {{ 'blogs.article_item.tags_label' | t}}
+        </span>
+        {% for tag in article.tags %}
+          {{ tag | link_to_tag: tag }}
+        {% endfor %}
+      </aside>
+    {% endif %}
+
+    {% include 'share-buttons', settings: section.settings %}
+  </footer>
+
+  {% include 'comments' %}
+  {% include 'article-pagination' %}
+</article>
+
+{% schema %}
+{
+  "name": "Blog posts",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show tags",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show post author"
+    },
+    {
+      "type": "header",
+      "content": "Sharing"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_widget_facebook",
+      "label": "Share on Facebook"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_widget_twitter",
+      "label": "Tweet on Twitter"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_widget_pinterest",
+      "label": "Pin on Pinterest"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_widget_fancy",
+      "label": "Add to Fancy"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_widget_google_plus",
+      "label": "+1 on Google Plus"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_widget_email",
+      "label": "Send as an e-mail"
+    }
+  ]
+}
+
+{% endschema %}

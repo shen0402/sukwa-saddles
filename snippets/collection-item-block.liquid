@@ -1,0 +1,172 @@
+{% comment %}
+  @param link_collection {Boolean} - Optional
+         Pass as false to create a non-linkable collection block
+
+  @param first_product {Boolean} - Optional
+         If true, the first product image will be used if no collection image is
+         available.
+
+  @param block_tag {String} - Optional
+         Uses a string to determine the outer DOM tag
+         Defaults to: 'article'
+
+  @param title_tag {String} - Optional
+         Uses a string to determine the title tag
+         Defaults to: 'h1'
+
+  @param media_tag {String} - Optional
+         Uses a string to determine the tag around the image
+         Defaults to: 'div'
+
+  @param show_description {Boolean} - Optional
+         If true, show the collection description.
+
+  @param collection_cta_url {String} - Optional
+         Pass a url to show a link to the collection
+         Only works if 'link_collection' is false
+
+  @param title_link {String} - Optional
+         Pass a URL for the collection title to link to the collection
+{% endcomment %}
+
+{% if link_collection == blank %}
+  {% assign link_collection = true %}
+{% endif %}
+
+{% if block_tag == blank %}
+  {% assign block_tag = 'article' %}
+{% endif %}
+
+{% if title_tag == blank %}
+  {% assign title_tag = 'h1' %}
+{% endif %}
+
+{% if media_tag == blank %}
+  {% assign media_tag = 'div' %}
+{% endif %}
+
+{% if link_collection %}
+  {% assign item_tag = 'a' %}
+{% else %}
+  {% assign item_tag = 'div' %}
+{% endif %}
+
+{% assign image_src = false %}
+{% assign image_alt = false %}
+
+{%- if collection and collection.image -%}
+  {% assign image_src = collection.image %}
+  {% assign image_alt = collection.image.alt %}
+  {% assign image_size = 'x600' %}
+{%- elsif collection.products.first.featured_image and first_product -%}
+  {% assign image_src = collection.products.first.featured_image %}
+  {% assign image_alt = collection.title %}
+  {% assign image_size = '1024x1024' %}
+{%- endif -%}
+
+{% assign background_style = false %}
+{% if image_src %}
+  {%- capture background_style -%}
+   {%
+    include 'rimg',
+    img: image_src,
+    size: image_size,
+    lazy: true,
+    background: true
+  %}
+  {%- endcapture -%}
+{% endif %}
+
+{% capture color_class %}{%- include 'collection-color' -%}{% endcapture %}
+{% assign color_class = color_class | strip_newlines | replace: ' ', '' %}
+
+{% if onboarding %}
+  {% capture current %}{% cycle 1, 2, 3, 4 %}{% endcapture %}
+  {% comment %}Set onboarding images{% endcomment %}
+  {% assign image_alt = '' %}
+  {% assign collection_placeholder = 'collection-' | append: current %}
+  {%- capture placeholder_background -%}
+    {%-
+      include 'placeholder_svg_uri',
+      placeholder: collection_placeholder
+    -%}
+  {%- endcapture -%}
+
+  {%- capture background_style -%}
+    style="background-image: url('{{ placeholder_background }}');"
+  {%- endcapture -%}
+
+  {% comment %}Fake collection colors{% endcomment %}
+  {% assign color_class = 'collection-colored-' | append: current %}
+{% endif %}
+
+<{{ block_tag }}
+  class="collection-item {{ color_class | strip_newlines }}"
+  {% if block_attributes %} {{ block_attributes }}{% endif %}
+>
+
+  <{{ item_tag }}
+    class="collection-item-wrapper"
+    {% if link_collection %}href="{{ collection.url }}"{% endif %}>
+
+    <div class="collection-item-content {{ color_class }}">
+      <div class="collection-item-details">
+        <{{ title_tag }} class="collection-item-title">
+          {% if title_link %}
+            <a href="{{ title_link }}">
+          {% endif %}
+          {% unless onboarding %}
+            {{ collection.title }}
+          {% else %}
+            {{ 'home.collection_list.title' | t }}
+          {% endunless %}
+
+          {% if title_link %}
+            </a>
+          {% endif %}
+        </{{ title_tag }}>
+
+        {% if show_description and collection.description != blank or onboarding %}
+          <div class="collection-item-description rte">
+            {% unless onboarding %}
+              {{ collection.description }}
+            {% else %}
+              {{ 'home.collection_list.description_html' | t }}
+            {% endunless %}
+          </div>
+        {% endif %}
+
+        {% if collection_cta_url and link_collection != true %}
+          <a
+            class="home-section-link"
+            href="{{ collection_cta_url }}"
+          >
+            {{ 'shop_collection' | t }}
+            {%- include 'icon-arrow-right' -%}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    {%- if image_src or onboarding -%}
+      <{{ media_tag }}
+        class="collection-item-image"
+        {{ background_style }}
+      >
+        {% unless onboarding %}
+          {%
+            include 'rimg',
+            img: image_src,
+            size: image_size,
+            alt: image_alt,
+            lazy: true
+          %}
+        {% else %}
+          {{ collection_placeholder | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endunless %}
+      </{{ media_tag }}>
+    {%- endif -%}
+
+  </{{ item_tag }}>
+
+</{{ block_tag }}>

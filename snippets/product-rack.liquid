@@ -1,0 +1,67 @@
+{% comment %}
+
+  This loads products from a collection in their collection order, wrapping
+  around to the beginning if needed.
+
+  @param parent Product
+         The parent product, which should be excluded from this list.
+
+  @param parent_collection Collection
+         The collection to search in.
+
+  @param limit Number
+         The maximum number of products to load.
+
+{% endcomment %}
+
+{% assign to_load = limit %}
+{% assign can_load = false %}
+{% assign product_index = 1 %}
+
+{% comment %}
+  Loop through all products, skipping any products up to and including
+  the parent.
+{% endcomment %}
+
+{% for product in parent_collection.products %}
+  {% if to_load < 1 %}
+    {% break %}
+  {% endif %}
+
+  {% if can_load %}
+    {% assign product_index = product_index | plus: 1 %}
+    {% assign to_load = to_load | minus: 1 %}
+    <script type="application/vnd.vogue.product+html">
+      {% include 'product', show_pagination: true %}
+    </script>
+  {% endif %}
+
+  {% if product.handle == parent.handle %}
+    {% assign can_load = true %}
+  {% endif %}
+{% endfor %}
+
+
+{% comment %}
+  Loop through all products again, starting from the beginning. This time we
+  can stop when we hit our original parent product.
+{% endcomment %}
+
+{% for product in parent_collection.products %}
+  {% if product.handle == parent.handle %}
+    {% break %}
+  {% endif %}
+
+  {% if to_load < 1 %}
+    {% break %}
+  {% endif %}
+
+  {% if can_load %}
+    {% assign product_index = product_index | plus: 1 %}
+    {% assign to_load = to_load | minus: 1 %}
+    <script type="application/vnd.vogue.product+html">
+      {% include 'product', show_pagination: true %}
+    </script>
+  {% endif %}
+{% endfor %}
+

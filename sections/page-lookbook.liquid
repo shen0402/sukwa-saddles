@@ -1,0 +1,94 @@
+<script
+  type="application/json"
+  data-section-id="{{ section.id }}"
+  data-section-type="page-lookbook"
+>
+</script>
+
+{%- capture collection_color -%}{%- include 'collection-color' -%}{%- endcapture -%}
+{% assign collection_color = collection_color | strip_newlines | replace: ' ', '' %}
+
+<section class="lookbook">
+  {%
+    include 'collection-item-block',
+    block_tag: 'div',
+    first_product: false,
+    link_collection: false,
+    show_description: section.settings.show_description
+  %}
+
+  {% if collection.all_tags.size > 0 and section.settings.enable_tag_filtering %}
+    {% include 'tags-list' with collection %}
+  {% endif %}
+
+  {% paginate collection.products by section.settings.pagination %}
+
+    {% assign last_size = -1 %}
+
+    {% for product in collection.products %}
+      {% assign lookbook_size = product.images | size %}
+      {% assign lookbook_type = 'grid' %}
+
+      {% if lookbook_size > 6 %}
+        {% assign lookbook_type = 'slider' %}
+      {% endif %}
+
+      {% if last_size == lookbook_size %}
+        {% assign lookbook_template = 'lookbook-layout-' | append: lookbook_size | append: '-alt' %}
+        {% assign last_size = -1 %}
+      {% else %}
+        {% assign lookbook_template = 'lookbook-layout-' | append: lookbook_size %}
+        {% assign last_size = lookbook_size %}
+      {% endif %}
+
+      {% if lookbook_type == 'slider' %}
+        {% assign lookbook_template = 'lookbook-layout-slider' %}
+      {% endif %}
+
+      {% comment %}
+        Add collection color to lookbook layout for even rows
+      {% endcomment %}
+      {% assign row_color = blank %}
+      {% assign row_modulo = forloop.index | modulo: 2 %}
+      {% if row_modulo == 0 %}
+        {% assign row_color = collection_color | strip_newlines %}
+      {% endif %}
+
+      {%
+        include lookbook_template,
+        row_color: row_color
+      %}
+    {% endfor %}
+
+    {% include 'pagination' %}
+  {% endpaginate %}
+</section>
+
+{% schema %}
+{
+  "name": "Lookbook pages",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_tag_filtering",
+      "label": "Enable tag filtering"
+    },
+    {
+      "type": "range",
+      "id": "pagination",
+      "label": "Products per page",
+      "min": 6,
+      "max": 30,
+      "step": 6,
+      "default": 12
+    }
+  ]
+}
+
+{% endschema %}

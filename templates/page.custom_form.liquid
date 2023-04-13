@@ -1,0 +1,118 @@
+<div class="contained">
+  <div class="page-content contact-page">
+    <h1 class="page-title jc-custom-form-title">{{ page.title }}</h1>
+
+    {% unless page.content == blank %}
+      <div class="rte page-body">
+        {{ page.content }}
+      </div>
+    {% endunless %}
+
+    <div class="contact-form jc-contact-form">
+      {% form 'contact' %}
+
+        {% if form.posted_successfully? %}
+          <p class="success-message">
+            {{ 'general.contact.success' | t  }}
+          </p>
+        {% else %}
+
+          {% if form.errors %}
+            {{ form.errors | default_errors }}
+          {% endif %}
+
+          <div class="input-wrapper">
+            <label for="contact-name" class="visually-hidden">{{ 'general.general.name' | t }}</label>
+            <input
+              id="contact-name"
+              type="text"
+              placeholder="{{ 'general.general.name_placeholder' | t }}"
+              value="{{ form.name }}"
+              name="contact[name]"
+              class="jc-input-field input-field {% if form.errors contains "name" %}error{% endif %}">
+          </div>
+      
+      	  <div class="input-wrapper">
+            <label for="contact-email" class="visually-hidden">{{ 'general.general.phone' | t }}</label>
+            <input
+              id="contact-phone"
+              type="tel"
+              placeholder="{{ 'general.general.phone_placeholder' | t }}"
+              value="{{ form.phone }}"
+              name="contact[phone]"
+              class="jc-input-field input-field {% if form.errors contains "phone" %}error{% endif %}">
+          </div>
+
+          <div class="input-wrapper">
+            <label for="contact-email" class="visually-hidden">{{ 'general.general.email' | t }}</label>
+            <input
+              id="contact-email"
+              type="text"
+              placeholder="{{ 'general.general.email_placeholder' | t }}"
+              value="{{ form.email }}"
+              name="contact[email]"
+              class="jc-input-field input-field {% if form.errors contains "email" %}error{% endif %}">
+          </div>
+      
+      	  <div class="input-wrapper">
+            <label for="contact-address" class="visually-hidden">Address</label>
+            <input
+              id="contact-address"
+              type="text"
+              placeholder="Address"
+              value=""
+              name="contact[address]"
+              class="jc-input-field input-field {% if form.errors contains "name" %}error{% endif %}">
+          </div>
+      
+         <div class="input-wrapper">
+            <label for="contact-city" class="visually-hidden">City</label>
+            <input
+              id="contact-city"
+              type="text"
+              placeholder="City"
+              value=""
+              name="contact[city]"
+              class="jc-input-field input-field {% if form.errors contains "name" %}error{% endif %}">
+          </div>
+      
+         <div class="input-wrapper">
+            <label for="contact-state" class="visually-hidden">State</label>
+            <input
+              id="contact-state"
+              type="text"
+              placeholder="State"
+              value=""
+              name="contact[state]"
+              class="jc-input-field input-field {% if form.errors contains "name" %}error{% endif %}">
+          </div>
+      
+          <div class="input-wrapper">
+            <label for="contact-zip-code" class="visually-hidden">Zip Code</label>
+            <input
+              id="contact-zip-code"
+              type="text"
+              placeholder="Zip Code"
+              value=""
+              name="contact[zip-code]"
+              class="jc-input-field input-field {% if form.errors contains "name" %}error{% endif %}">
+          </div>
+
+     
+
+          <div class="input-wrapper">
+            <label for="contact-design-specs" class="visually-hidden">Design Sepcifications</label>
+            <textarea
+              id="contact-design-specs"
+              name="contact[design-specs]"
+              placeholder="Design Specifications"
+              class="jc-input-field input-field {% if form.errors contains "comments" %}error{% endif %}">{{ form.comments }}</textarea>
+          </div>
+
+          <input class="button jc-contact-submit-btn" type="submit" value="{{ 'general.contact.submit' | t }}">
+        {% endif %}
+
+      {% endform %}
+    </div>
+  </div>
+</div>

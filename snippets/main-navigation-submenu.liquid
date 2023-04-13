@@ -1,0 +1,55 @@
+{% comment %}
+  @param menu LinkedList
+  @param depth Number
+  @param is_submenu Boolean
+
+  @param aria_expanded Bool
+         a11y helper
+
+  @param sub_menu_title String
+         Menu title must be passed if is submenu
+{% endcomment %}
+
+{% assign menu_title = false %}
+{% if is_submenu %}
+  {% assign menu_title = sub_menu_title %}
+{% else %}
+  {% assign menu_title = linklists[menu].title %}
+{% endif %}
+
+{% if linklists[menu] %}
+  <ul
+    class="navigation-menu navigation-primary-list"
+    {% if menu_title %}aria-label="{{ menu_title }}"{% endif %}
+  >
+    {% for link in linklists[menu].links %}
+      {% assign submenu = link.title | handle %}
+      {% assign d = depth | minus: 1 %}
+      {% if d > 0 and link and link.links.size > 0 %}
+        <li class="navigation-primary-item navigation-parent-item">
+          <a
+            class="navigation-parent-link"
+            href="{{ link.url }}"
+            {% if aria_expanded %}
+              aria-expanded="true"
+            {% else %}
+              aria-haspopup="true"
+              aria-expanded="false"
+            {% endif %}
+          >{{ link.title }}</a>
+          {%
+            include 'main-navigation-submenu',
+            menu: submenu,
+            depth: d,
+            sub_menu_title: link.title,
+            aria_expanded: aria_expanded
+          %}
+        </li>
+      {% else %}
+        <li class="navigation-primary-item">
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% endif %}

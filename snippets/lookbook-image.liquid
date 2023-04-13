@@ -1,0 +1,24 @@
+{% assign wrapper_class = 'lookbook-image-wrapper' %}
+{% assign image_size = '1024x1024' %}
+{% if size != blank %}
+  {% assign image_size = size %}
+{% endif %}
+
+{% unless hide_link %}
+  <a class="{{ wrapper_class }}" href="{{ product.url | within: collection }}">
+{% else %}
+  <div class="{{ wrapper_class }}">
+{% endunless %}
+  {%
+    include 'rimg',
+    img: image,
+    lazy: true,
+    class: 'lookbook-image',
+    attr: 'data-lookbook-image',
+    size: image_size
+  %}
+{% unless hide_link %}
+  </a>
+{% else %}
+  </div>
+{% endunless %}
