@@ -1,103 +1,113 @@
 <!doctype html>
 <html class="no-js" lang="{{ shop.locale }}">
 
-<head>
+  <head>
 
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>
-    {%- if page_title -%}
-      {{- page_title -}}
+    <title>
+      {%- if page_title -%}
+        {{- page_title -}}
 
-      {%- if current_tags -%}
-        {%- assign meta_tags = current_tags | join: ', ' %}
-        {{ 'general.title.tags' | t: tags: meta_tags -}}
+        {%- if current_tags -%}
+          {%- assign meta_tags = current_tags | join: ', ' %}
+          {{ 'general.title.tags' | t: tags: meta_tags -}}
+        {%- endif -%}
+
+        {%- if current_page != 1 -%}
+          {{- 'general.title.page' | t: page: current_page -}}
+        {%- endif -%}
+
+        {%- unless page_title contains shop.name -%}
+          {{- 'general.title.shop' | t: shop: shop.name -}}
+        {%- endunless -%}
+      {%- else -%}
+        {{- shop.name -}}
       {%- endif -%}
+    </title>
 
-      {%- if current_page != 1 -%}
-        {{- 'general.title.page' | t: page: current_page -}}
-      {%- endif -%}
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}" />
+    {% endif %}
+    {% include 'favicon' %}
 
-      {%- unless page_title contains shop.name -%}
-        {{- 'general.title.shop' | t: shop: shop.name -}}
-      {%- endunless -%}
-    {%- else -%}
-      {{- shop.name -}}
-    {%- endif -%}
-  </title>
+    {% if template contains 'collection' and current_tags %}
+      <meta name="robots" content="noindex" />
+      <link rel="canonical" href="{{ shop.url }}{{ collection.url }}" />
+    {% else %}
+      <link rel="canonical" href="{{ canonical_url }}" />
+    {% endif %}
 
-  {% if page_description %}
-    <meta name="description" content="{{ page_description | escape }}" />
-  {% endif %}
-  {% include 'favicon' %}
+    <meta name="viewport" content="width=device-width" />
 
-  {% if template contains 'collection' and current_tags %}
-    <meta name="robots" content="noindex" />
-    <link rel="canonical" href="{{ shop.url }}{{ collection.url }}" />
-  {% else %}
-    <link rel="canonical" href="{{ canonical_url }}" />
-  {% endif %}
+    <script>
+      (function(H) {
+        H.className = H.className.replace(/\bno-js\b/, 'js')
+      })(document.documentElement)
+    </script>
 
-  <meta name="viewport" content="width=device-width" />
+    {{ content_for_header }}
 
-  <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
+    {% assign twitter_handle = settings.social_twitter_url | split: 'twitter.com/' | last %}
+    {%
+       include 'social-meta-tags',
+     twitter_handle: twitter_handle %}
 
-  {{ content_for_header }}
+    <!-- Theme CSS -->
+    {% if template == 'page.contact' %}
+      {{ 'webflow.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+    {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+    <link
+    type="text/css"
+      rel="stylesheet"
+      href="https://use.typekit.net/gsl3cam.css">
 
-  {% assign twitter_handle = settings.social_twitter_url | split: 'twitter.com/' | last %}
-  {%
-    include 'social-meta-tags',
-    twitter_handle: twitter_handle
-  %}
 
-  <!-- Theme CSS -->
-  {% if template == 'page.contact' %}
-  {{ 'webflow.css' | asset_url | stylesheet_tag }}
-  {% endif %}
-  {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
-  <link type="text/css" rel="stylesheet" href="https://use.typekit.net/gsl3cam.css">
-  
+    <!-- Theme object -->
+    {% include 'theme-options' %}
+    <script>
+      (function(w, d, t, h, s, n) {
+        w.FlodeskObject = n;
+        var fn = function() {
+          (w[n].q = w[n].q || []).push(arguments);
+        };
+        w[n] = w[n] || fn;
+        var f = d.getElementsByTagName(t)[0];
+        var v = '?v=' + Math.floor(new Date().getTime() / (120 * 1000)) * 60;
+        var sm = d.createElement(t);
+        sm.async = true;
+        sm.type = 'module';
+        sm.src = h + s + '.mjs' + v;
+        f.parentNode.insertBefore(sm, f);
+        var sn = d.createElement(t);
+        sn.async = true;
+        sn.noModule = true;
+        sn.src = h + s + '.js' + v;
+        f.parentNode.insertBefore(sn, f);
+      })(window, document, 'script', 'https://assets.flodesk.com', '/universal', 'fd');
+    </script>
+    <script>
+      window.fd('form', {formId: '63f656d0864dc24814353b55'});
+    </script>
 
-  <!-- Theme object -->
-  {% include 'theme-options' %}
-  <script>
-  (function(w, d, t, h, s, n) {
-    w.FlodeskObject = n;
-    var fn = function() {
-      (w[n].q = w[n].q || []).push(arguments);
-    };
-    w[n] = w[n] || fn;
-    var f = d.getElementsByTagName(t)[0];
-    var v = '?v=' + Math.floor(new Date().getTime() / (120 * 1000)) * 60;
-    var sm = d.createElement(t);
-    sm.async = true;
-    sm.type = 'module';
-    sm.src = h + s + '.mjs' + v;
-    f.parentNode.insertBefore(sm, f);
-    var sn = d.createElement(t);
-    sn.async = true;
-    sn.noModule = true;
-    sn.src = h + s + '.js' + v;
-    f.parentNode.insertBefore(sn, f);
-  })(window, document, 'script', 'https://assets.flodesk.com', '/universal', 'fd');
-</script>
 
-</head>
+  </head>
 
-<body class="{% include 'body-classes' %}">
+  <body class="{% include 'body-classes' %}">
 
-  {% include 'svg-sprite' %}
-  {% section 'header' %}
+    {% include 'svg-sprite' %}
+    {% section 'header' %}
 
-  <div class="content-wrapper">
-    <div class="main-content">
-      {{ content_for_layout }}
+    <div class="content-wrapper">
+      <div class="main-content">
+        {{ content_for_layout }}
+      </div>
+
+      <div class="content-overlay"></div>
     </div>
 
-    <div class="content-overlay"></div>
-  </div>
-
-  {% include 'footer-scripts' %}
-</body>
+    {% include 'footer-scripts' %}
+  </body>
 </html>
